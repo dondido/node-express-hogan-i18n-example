@@ -1,0 +1,15 @@
+<div id="lang-menu">
+	<ul >
+		<li><a href="#">‹ Back</a></li>
+		{{#langList}}
+		<li>
+			{{#link}}
+			<a class="lang {{prefix}}" href="/{{prefix}}/refresh">{{langstr}}</a>
+			{{/link}}
+			{{^link}}
+			<div class="lang {{prefix}}">{{langstr}}</div>
+			{{/link}}
+		</li>
+		{{/langList}}
+	</ul>
+</div>
