@@ -8,6 +8,7 @@ var express = require("express"),
 	hogan = require('hogan-express'),
 	i18n = require("i18n"),
 	localeList = ['en', 'bg'],
+	cssrouter = require(__dirname +'/../cssrouter/index.js'),
 	bodyParser = require('body-parser');
 
 var router = express.Router();
@@ -78,13 +79,17 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 	langCookie,
 	langCookieIndex,
 	localeIndex,
+	cssList = [],
+	cssrouterpage,
+	cssrouterpagemorefiles,
 	language = req.params.language,
 	langList = [
 		{ 'prefix': 'en', 'langstr': 'English', 'link': true },
 		{ 'prefix': 'bg', 'langstr': 'Bulgarian', 'link': true },	
 	],
 	i,
-	page = req.params.page || 'home';
+	page = req.params.page || 'home',
+	more = req.params.more;
 	console.log(req.url)
 	// mustache helper
 	res.locals.__ = function () {
@@ -92,7 +97,18 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 			return i18n.__.apply(req, arguments);
 		};
 	};
-	
+
+	if (page && cssrouter[page]) {
+		cssrouterpage = cssrouter[page];
+
+		cssrouterpage.files && cssrouterpage.files.length && (cssList = cssList.concat(cssrouterpage.files));
+		
+		if (more && more in cssrouterpage) {
+			cssrouterpagemorefiles = cssrouterpage[more].files;
+			cssrouterpagemorefiles && cssrouterpagemorefiles.length && cssList.concat(cssrouterpagemorefiles);
+		}
+	}
+	console.log('AA',cssList);
 	//res.setHeader("Cache-Control", "public, max-age=345600"); // ex. 4 days in seconds.
 	
 	/* Looks for the header and if the header is present it sets
@@ -110,7 +126,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 		of the full page and using Javascript on the client this fragment
 		is substituted in for the last page's content. */
 		console.log(page,req.url)
-		res.render(req.params.more || page, {
+		res.render(more || page, {
 			layout: false
 		}, function(err, html) {
 			if (err) {
@@ -167,7 +183,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 
 		res.cookie('language',  language, { maxAge: 900000 });
 		
-		urlList ? res.redirect(urlList.join('/')) : res.render(req.params.more || page);
+		urlList ? res.redirect(urlList.join('/')) : res.render(more || page);
 	}
 });
 

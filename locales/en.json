@@ -1,3 +1,10 @@
 {
-	"headerh1": "Hotel Lodge House Seasons"
+	"headerh1": "Hotel Lodge House Seasons",
+	"Home": "Home",
+	"Booking": "Booking",
+	"Gallery": "Gallery",
+	"Rates": "Rates",
+	"Location": "Location",
+	"Contact": "Contact",
+	"Language": "Language"
 }
