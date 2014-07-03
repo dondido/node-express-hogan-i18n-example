@@ -8,6 +8,7 @@
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
 	this.updatePage = function(e, data) {
+		console.log(data.cssList)
 		$("#yield").html(data.html);
 		$("#main-nav").removeClass().addClass(data.navSelector);
 	};

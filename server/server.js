@@ -97,12 +97,15 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 			return i18n.__.apply(req, arguments);
 		};
 	};
+	res.locals.cssList = cssList;
+	res.locals.lang = language;
+	res.locals.currentpage = page; 
 
 	if (page && cssrouter[page]) {
 		cssrouterpage = cssrouter[page];
 
 		cssrouterpage.files && cssrouterpage.files.length && (cssList = cssList.concat(cssrouterpage.files));
-		
+	
 		if (more && more in cssrouterpage) {
 			cssrouterpagemorefiles = cssrouterpage[more].files;
 			cssrouterpagemorefiles && cssrouterpagemorefiles.length && cssList.concat(cssrouterpagemorefiles);
@@ -114,10 +117,8 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 	/* Looks for the header and if the header is present it sets
 	the request options to not use a layout page. */
 	if ('x-requested-with' in req.headers && ~req.headers['x-requested-with'].indexOf('XMLHttpRequest')) {
-		res.locals = {
-			lang: language,
-			currentpage: page
-		};
+		
+
 		/* The basic idea of here is that we update the parts of the page
 		that change when the user navigates through your app. However, unlike
 		a normal AJAX app that returns only data (JSON) from the server,
@@ -140,6 +141,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 					title: page,
 					url: req.url,
 					navSelector: page,
+					cssList: cssList,
 					html: html
 				})
 			}
@@ -171,15 +173,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 			}
 		}
 		
-		res.locals = {
-			'__' : function () {
-			return function (text, render) {
-				return i18n.__.apply(req, arguments);
-			}},
-			'lang': language,
-			'langList': langList,
-			'currentpage': page
-		};
+		res.locals.langList = langList;
 
 		res.cookie('language',  language, { maxAge: 900000 });
 		
