@@ -11,7 +11,7 @@
 		var cl;
 		if ('cssList' in data){
 			for (cl in data.cssList){
-				$('head').append('<link href="css/' + data.cssList[cl] + '.css" rel="stylesheet" />');
+				$('head').append('<link href="/css/' + data.cssList[cl] + '.css" rel="stylesheet" />');
 			}
 		}
 		$("#yield").html(data.html);

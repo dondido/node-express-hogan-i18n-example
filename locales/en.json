@@ -6,5 +6,11 @@
 	"Rates": "Rates",
 	"Location": "Location",
 	"Contact": "Contact",
-	"Language": "Language"
+	"Language": "Language",
+	"ratestblth1": "Number of Guests",
+	"ratestblth2": "October to May",
+	"ratestblth3": "June and Sep­tember",
+	"ratestblth4": "July and August",
+	"upto": "up to",
+	"euros": "euros"
 }

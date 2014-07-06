@@ -8,8 +8,8 @@ var express = require("express"),
 	hogan = require('hogan-express'),
 	i18n = require("i18n"),
 	localeList = ['en', 'bg'],
-	cssrouter = require(__dirname +'/../cssrouter/index.js'),
-	bodyParser = require('body-parser');
+	cssrouter = require(__dirname +'/../cssrouter/index.js');
+	
 
 var router = express.Router();
 
@@ -51,7 +51,6 @@ app.set('partials', {
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'html');
 
-app.use(bodyParser());
 app.use(favicon(__dirname + '/../public/images/icon/favicon.ico'));
 
 app.use(express.static(path.join(__dirname, '/../public'), {
@@ -90,17 +89,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 	i,
 	page = req.params.page || 'home',
 	more = req.params.more;
-	console.log(req.url)
-	// mustache helper
-	res.locals.__ = function () {
-		return function (text, render) {
-			return i18n.__.apply(req, arguments);
-		};
-	};
-	res.locals.cssList = cssList;
-	res.locals.lang = language;
-	res.locals.currentpage = page; 
-
+	
 	if (page && cssrouter[page]) {
 		cssrouterpage = cssrouter[page];
 
@@ -111,14 +100,21 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 			cssrouterpagemorefiles && cssrouterpagemorefiles.length && cssList.concat(cssrouterpagemorefiles);
 		}
 	}
-	console.log('AA',cssList);
-	//res.setHeader("Cache-Control", "public, max-age=345600"); // ex. 4 days in seconds.
+
+	res.locals.cssList = cssList;
+	res.locals.currentpage = page; 
+	// mustache helper
+	res.locals.__ = function () {
+		return function (text, render) {
+			return i18n.__.apply(req, arguments);
+		};
+	};
 	
 	/* Looks for the header and if the header is present it sets
 	the request options to not use a layout page. */
 	if ('x-requested-with' in req.headers && ~req.headers['x-requested-with'].indexOf('XMLHttpRequest')) {
 		
-
+		res.locals.lang = language;
 		/* The basic idea of here is that we update the parts of the page
 		that change when the user navigates through your app. However, unlike
 		a normal AJAX app that returns only data (JSON) from the server,
@@ -161,6 +157,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 		}
 		
 		localeIndex = localeList.indexOf(language);
+		res.locals.lang = language;
 		~ localeIndex || (language = 'en');
 		
 		req.setLocale(language);
@@ -176,7 +173,7 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 		res.locals.langList = langList;
 
 		res.cookie('language',  language, { maxAge: 900000 });
-		
+		console.log('AB', cssList, more, page);
 		urlList ? res.redirect(urlList.join('/')) : res.render(more || page);
 	}
 });

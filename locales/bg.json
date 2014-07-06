@@ -6,6 +6,11 @@
 	"Rates": "Цени",
 	"Location": "Място",
 	"Contact": "Контакти",
-	"Language": "Език"
-
+	"Language": "Език",
+	"ratestblth1": "Брой Гости",
+	"ratestblth2": "Октомври до Май",
+	"ratestblth3": "Юни и Сеп­тември",
+	"ratestblth4": "Юли и Август",
+	"upto": "до",
+	"Euros": "eвро"
 }
