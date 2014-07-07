@@ -18,5 +18,8 @@
 	"email": "email",
 	"subject": "subject",
 	"message": "message",
-	"required": "required"
+	"required": "required",
+	"and": "and",
+	"rates": "rates",
+	"prices": "prices"
 }
