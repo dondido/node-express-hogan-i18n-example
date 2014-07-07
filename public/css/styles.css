@@ -339,3 +339,7 @@ h3 {
 .capitalise { 
 	text-transform: capitalize;
 }
+
+.text-default { 
+	text-transform: none;
+}
