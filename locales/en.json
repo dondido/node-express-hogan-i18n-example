@@ -13,13 +13,22 @@
 	"ratestblth4": "July and August",
 	"upto": "up to",
 	"euros": "euros",
-	"your" : "your",
-	"name" : "name",
+	"your": "your",
+	"name": "name",
 	"email": "email",
 	"subject": "subject",
 	"message": "message",
 	"required": "required",
 	"and": "and",
 	"rates": "rates",
-	"prices": "prices"
+	"prices": "prices",
+	"ratesonebedroomflatth":"Price per night for a flat",
+	"ratesstandaloneflatth":"Price per night for a standalone flat",
+	"ratesmaindesc": "Seasons Lodge Guest House is a place dedicated to offering you great value and quality services. With this in mind, all of our members strive to make the guest experience as individual, hospitable and affordable as possible.
+        Upon booking you may request refreshments / buffets (additional charges apply) and indicate your preferred flat. All requests will be met where possible and flats set-up before your arrival to ensure you make the most of your booking time. All prices include VAT (20% Value Added Tax).",
+        "ratesextrainfo": "* Extra person is at additional charge of 10 {{#__}}Euros{{/__}} per person per night. Maximum 2 additional adults is allowed. <br>
+        ** Access to kitchen facilities (for an additional charge of 5 {{#__}}Euros{{/__}} per night).<br>
+        Breakfast, Lunch and Dinner at Seasons Lodge House are tailored to suit the individual needs of each guest (ordered in advanced).<br>
+        Discounts are available for renting the whole guest house.<br>
+        Children under the age of 4 are free of charge."
 }
