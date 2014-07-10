@@ -181,4 +181,4 @@ app.get('/:language?/:page?/:more?', function(req, res) {
 // Start Node.js Server
 http.createServer(app).listen(port);
 
-console.log('Welcome to Backbone-Require-Boilerplate!\n\nPlease go to http://localhost:' + port + ' to start using Require.js and Backbone.js');
+console.log('Welcome to node-express-hogan-i18n-example!\n\nPlease go to http://localhost:' + port + ' to start using it');
