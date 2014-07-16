@@ -19,6 +19,7 @@
     "hogan",
     "i18n"
   ],
+  "license": "MIT",
   "devDependencies": {
     "express": "~4.0.0",
     "morgan": "~1.0.0",
