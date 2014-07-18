@@ -1,9 +1,20 @@
 (function($) {
-	var $document = $(document);
-
-	var initialNavigation = true,
-		menuPaths,
-		defaultPath = location.pathname;
+	var $document = $(document),
+	initialNavigation = true,
+	defaultPath = location.pathname;
+	
+	$document.on({
+		"dataPageRefresh": this.updatePage,
+		"uiNavigate": this.navigateUsingPushState,
+		"uiNavigate": this.navigateUsingPushState,
+		"click": this.navigate,
+		"uiPageChanged": this.setTitle
+	});
+	
+	$(window).on({
+		"beforeunload", this.destroyState,
+		"popstate", this.onPopState
+	});
 	
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
@@ -17,9 +28,6 @@
 		$("#yield").html(data.html);
 		$("#main-nav").removeClass().addClass(data.navSelector);
 	};
-	
-	$(document).on('dataPageRefresh', this.updatePage);
-
 
 	/* The trick with the AJAX request is that when it is made
 	a property 'x-requested-with' is added to the HTTP header. 
@@ -37,7 +45,6 @@
 				data.pushState && history.pushState({url: resp.url}, resp.title, resp.url);
 				$(document).trigger('dataPageRefresh', resp);
 			},
-			
 			error: function(req, status, err) {
 				console.log('something went wrong', status, err);
 			}
@@ -55,18 +62,13 @@
 			navSelector: $("#main-nav")[0].className,
 			html: $("#yield").html()
 		};
-
-		
 		if (initialNavigation) {
 			history.replaceState(currentState, "Home", defaultPath);
 			initialNavigation = false;
 		}
-
 		requestJSON({pushState: 1, url: href});
-
 	};
 	
-	$document.on('uiNavigate', this.navigateUsingPushState);
 	/*
 	The first request to the server is always a normal request. The server then returns
 	the page in the normal fashion - rendered entirely on the server side.
@@ -80,21 +82,16 @@
 		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which != undefined && e.which > 1)) {
 			return;
 		}
-
 		$target = $(e.target);
 		$link = $target.closest('.js-nav');
 		if ($link.length && !e.isDefaultPrevented()) {
 			href = $link.attr('href');
-
 			if (href != location.pathname || defaultPath != href) {
-				$link.trigger('uiNavigate', href);
 				e.preventDefault();
+				$link.trigger('uiNavigate', href);
 			}
-
 		}
 	};
-	
-	$document.on("click", this.navigate);
 
 	this.setTitle = function(e, data) {
 		var state = data || e.originalEvent.state;
@@ -102,8 +99,6 @@
 			document.title = state.title;
 		}
 	};
-	
-	$(document).on('uiPageChanged', this.setTitle);
 
 	this.onPopState = function(e) {
 		/* Replaces the old content with the new content from browser's cache. */
@@ -114,10 +109,17 @@
 			} else {
 				updatePage(e, e.state)
 			}
-
 		}
 	};
 	
-	window.addEventListener('popstate', this.onPopState, false);
+	/*
+	adds a listener for the “beforeunload” event that uses replaceState to remove the state 
+	associated with the current URL. This way when the user hits the back button, the 
+	“popstate” event will ﬁre with a “state” property of null, and the aforementioned 
+	“popstate” event listener will just ignore it.
+	*/
+	this.destroyState = function (e) {
+ 		history.replaceState(null, document.title, window.location.href);
+	};
 
 })(jQuery);
