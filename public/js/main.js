@@ -12,8 +12,8 @@
 	});
 	
 	$(window).on({
-		"beforeunload", this.destroyState,
-		"popstate", this.onPopState
+		"beforeunload": this.destroyState,
+		"popstate": this.onPopState
 	});
 	
 	/* This HTML is only a fragment of the full page and

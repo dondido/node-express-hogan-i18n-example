@@ -109,3 +109,15 @@ textarea {
 .icon-envelope {
 	background-position: -72px 0;
 }
+
+#submit-success:target {
+	display: block;
+}
+
+#submit-fail:target {
+	display: block;
+}
+
+.submit-states {
+	display: none;
+}
