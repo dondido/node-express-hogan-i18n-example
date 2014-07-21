@@ -26,9 +26,6 @@ exports.init = function(express) {
 }
 
 exports.connect = function(req, res, next) {
-console.log('appmailer', req.body);
-// When Content-Type is application/json
-console.log('req', req.xhr);
 var emailLocals = merge(req.body, {
     layout: false,
     to: emailCfg.to, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
@@ -37,18 +34,14 @@ var emailLocals = merge(req.body, {
     'email', 
     emailLocals, 
     function (err) {
+    var emailstatus = 'submit-success';
     if (err) {
       // handle error
       console.log('There was an error sending the email');
-      res.send('There was an error sending the email');
-      return;
+      emailstatus = 'submit-fail';
     }
     /* This results in only the portion of our view that is page specific
     to be rendered and returned. If the request header is not requested with 
     XMLHttpRequest then the page is rendered like normal with the full view. */
-    req.xhr ? res.json({'emailstatus': 'sent'}) : res.redirect(req.url + '#submit-success');
-
-    //console.log('req.body.name', req.body);
-    //getSimple.init(req, res);
-    //res.redirect(req.url + '#submit-success');
+    req.xhr ? res.json({'emailstatus': emailstatus}) : res.redirect(req.url + '#' + emailstatus);
 }
