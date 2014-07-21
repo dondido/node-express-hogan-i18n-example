@@ -6,7 +6,6 @@
 	$document.on({
 		"dataPageRefresh": this.updatePage,
 		"uiNavigate": this.navigateUsingPushState,
-		"uiNavigate": this.navigateUsingPushState,
 		"click": this.navigate,
 		"uiPageChanged": this.setTitle
 	});
