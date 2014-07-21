@@ -2,7 +2,13 @@
 	var $document = $(document),
 	// variable to hold request
 	req;
-
+	
+	this.resetForm = function(){
+		// reenable the inputs
+		$inputs.prop("disabled", false);
+		$(submit-states).removeClass("active");
+	};
+	
 	this.submitForm = function(e){
 		var $form = $(this),
 		emailstatus = '#subnit-fail';
@@ -44,9 +50,8 @@
 		// callback handler that will be called regardless
 		// if the request failed or succeeded
 		req.always(function () {
-			$(emailstatus).toggleClass("submit-states");
-			// reenable the inputs
-			$inputs.prop("disabled", false);
+			$("#reset-form").click(resetForm);
+			$(emailstatus).addClass("active");
 		});
 
 		// prevent default posting of form
