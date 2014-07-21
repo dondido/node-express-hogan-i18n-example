@@ -4,7 +4,8 @@
 	req;
 
 	this.submitForm = function(e){
-		var $form = $(this);
+		var $form = $(this),
+		emailstatus = '#subnit-fail';
 		/* Get some values from elements on the page: */
     		var postData = $form.serializeArray();
     		// let's select and cache all the fields
@@ -31,7 +32,7 @@
 
 		// callback handler that will be called on success
 		req.done(function (res, textStatus, jqXHR){
-			console.log("resp",res);
+			emailstatus = res.emailstatus;
 		});
 
 		// callback handler that will be called on failure
@@ -43,6 +44,7 @@
 		// callback handler that will be called regardless
 		// if the request failed or succeeded
 		req.always(function () {
+			$(emailstatus).toggleClass("submit-states");
 			// reenable the inputs
 			$inputs.prop("disabled", false);
 		});
