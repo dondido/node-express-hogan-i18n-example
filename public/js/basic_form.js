@@ -9,6 +9,12 @@
 		$(submit-states).removeClass("active");
 	};
 	
+	this.removePage = function(){
+		// reenable the inputs
+		$document.off("submit","form": this.submitForm)
+			.off("dataPageRefresh": this.removePage);
+	};
+	
 	this.submitForm = function(e){
 		var $form = $(this),
 		emailstatus = '#subnit-fail';
@@ -58,6 +64,8 @@
 		e.preventDefault();
 	}
 	
-	$document.on("submit","form", this.submitForm);
+	$document.on("submit","form": this.submitForm)
+		.on("dataPageRefresh": this.removePage);
+	
 
 })(jQuery);
