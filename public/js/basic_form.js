@@ -1,24 +1,23 @@
 (function($) {
-	var $document = $(document),
-	// variable to hold request
-	req;
+	var $document = $(document);
 	
-	this.resetForm = function(){
+	var resetForm = function(){
 		// reenable the inputs
 		$inputs.prop("disabled", false);
-		$(submit-states).removeClass("active");
+		$("submit-states").removeClass("active");
 	};
 	
-	this.removePage = function(){
+	var removePage = function(){
 		// reenable the inputs
-		$document.off("submit","form": this.submitForm)
-			.off("dataPageRefresh": this.removePage);
+		$document.off("submit","form", this.submitForm)
+			.off("dataPageRefresh", this.removePage);
 	};
 	
-	this.submitForm = function(e){
+	var submitForm = function(e){
 		var $form = $(this),
+		req,// variable to hold request
 		emailstatus = '#subnit-fail';
-		/* Get some values from elements on the page: */
+		// Get some values from elements on the page:
     		var postData = $form.serializeArray();
     		// let's select and cache all the fields
     		var $inputs = $form.find("input, select, button, textarea");
@@ -64,8 +63,8 @@
 		e.preventDefault();
 	}
 	
-	$document.on("submit","form": this.submitForm)
-		.on("dataPageRefresh": this.removePage);
+	$document.on("submit","form", submitForm)
+		.on("dataPageRefresh", removePage);
 	
 
 })(jQuery);

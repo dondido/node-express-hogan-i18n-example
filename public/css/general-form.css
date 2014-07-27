@@ -43,7 +43,7 @@
 }
 
 span.input-prepend input {
-    width: calc(100% - 48px);
+    width: calc(100% - 28px);
 }
 
 .input-append input, .input-prepend input, .input-append select, .input-prepend select, .input-append .uneditable-input, .input-prepend .uneditable-input {
@@ -81,10 +81,6 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     border-radius: 3px;
 }
 
-textarea.wpcf7-textarea, input.wpcf7-text {
-    width: calc(100% - 20px);
-}
-
 input, textarea, select, .uneditable-input {
     margin-bottom: 0;
 }
@@ -110,14 +106,15 @@ textarea {
 	background-position: -72px 0;
 }
 
-#submit-success:target {
-	display: block;
-}
-
+#submit-success:target,
 #submit-fail:target {
 	display: block;
 }
 
 .submit-states {
 	display: none;
+}
+
+.get-value {
+	width: 100%;
 }

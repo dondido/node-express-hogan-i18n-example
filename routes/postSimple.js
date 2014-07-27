@@ -44,4 +44,5 @@ var emailLocals = merge(req.body, {
     to be rendered and returned. If the request header is not requested with 
     XMLHttpRequest then the page is rendered like normal with the full view. */
     req.xhr ? res.json({'emailstatus': emailstatus}) : res.redirect(req.url + '#' + emailstatus);
+  })
 }

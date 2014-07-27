@@ -297,6 +297,8 @@ h3 {
 	color: #0088cc;
 }
 
+button,
+input[type="submit"],
 #lang-menu > ul > li > div {
 	background: #0088cc;
 	color: white;
@@ -342,4 +344,18 @@ h3 {
 
 .text-default { 
 	text-transform: none;
+}
+
+#map-canvas {
+	width: 100%;
+	height: 300px;
+	margin: 1ex 0;
+}
+
+button,
+input[type="submit"] {
+	border: 0;
+	padding: 1ex 1em;
+	margin: 1ex 0;
+	text-transform: uppercase;
 }
