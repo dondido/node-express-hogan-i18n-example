@@ -3,6 +3,10 @@
 	initialNavigation = true,
 	defaultPath = location.pathname;
 	
+	
+	var init = function(){
+		$("html").removeClass("no-js");
+	}
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
 	var updatePage = function(e, data) {
@@ -107,6 +111,7 @@
 	};
 
 	$document.on({
+		"ready": init,
 		"dataPageRefresh": updatePage,
 		"uiNavigate": navigateUsingPushState,
 		"uiPageChanged": setTitle
