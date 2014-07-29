@@ -21,17 +21,30 @@
         <option value="Whole House">Whole House</option>
     </select></span></span></p>
 <p>Select a reservation start date (required)<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-calendar"></i></span><span class="wpcf7-form-control-wrap date-159"><input type="text" name="date-159" value="" size="40" class="wpcf7-form-control wpcf7-date wpcf7-validates-as-required hasDatepicker" id="datepicker" aria-required="true"> </span></span></p>
+   <span class="add-on"><i class="icon-calendar"></i></span></span>
+   <input type="text" name="date-159" value="" size="40" class="hasDatepicker" id="datepicker" aria-required="true">
+   </p>
+
 <p>Select a duaration in days<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-resize-horizontal"></i></span><span class="wpcf7-form-control-wrap text-266"><input type="text" name="text-266" value="1" size="40" class="wpcf7-form-control wpcf7-text" aria-invalid="false"></span></span></p>
-<p>Your Name (required)<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-user"></i></span> <span class="wpcf7-form-control-wrap your-name"><input type="text" name="your-name" value="" size="40" class="wpcf7-form-control wpcf7-text" aria-invalid="false"></span><br>
-</span></p>
-<p>Your Email (required)<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-envelope"> </i></span><span class="wpcf7-form-control-wrap your-email"><input type="email" name="your-email" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" aria-required="true" aria-invalid="false"></span> </span></p>
-<p>Subject<br>
-    <span class="wpcf7-form-control-wrap your-subject"><input type="text" name="your-subject" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false"></span> </p>
-<p>Your Message<br>
-    <span class="wpcf7-form-control-wrap your-message"><textarea name="your-message" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required" aria-required="true" aria-invalid="false"></textarea></span> </p>
-<p><input type="submit" value="Send" class="wpcf7-form-control wpcf7-submit"><img class="ajax-loader" src="http://localhost/wordpress1/wp-content/plugins/contact-form-7/images/ajax-loader.gif" alt="Sending ..." style="visibility: hidden;"></p>
+   <span class="add-on"><i class="icon-resize-horizontal"></i></span></span>
+   <input type="text" name="text-266" value="1" size="40" aria-invalid="false">
+   </p>
+
+
+
+    <p>{{#__}}yourname{{/__}} ({{#__}}required{{/__}})<span class="input-prepend"><br>
+        <span class="add-on"><i class="icon-user"></i></span></span>
+        <input class="get-value" type="text" name="username" value="" size="40" aria-required="true" aria-invalid="false">
+    </p>
+    <p>{{#__}}youremail{{/__}} ({{#__}}required{{/__}})<span class="input-prepend"><br>
+        <span class="add-on"><i class="icon-envelope"></i></span></span>
+            <input class="get-value" type="email" name="useremail" value="" size="40" aria-required="true" aria-invalid="false">
+        </p>
+        <p>{{#__}}Subject{{/__}}<br>
+            <input class="get-value" type="text" name="subject" value="" size="40" aria-invalid="false">
+        </p>
+    <p>{{#__}}yourmessage{{/__}}<br>
+        <textarea class="get-value" name="message" cols="40" rows="10" aria-invalid="false"></textarea>
+    </p>
+    {{> submit}}
 </fieldset>
