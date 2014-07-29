@@ -20,8 +20,7 @@
         map = new google.maps.Map($mapCanvas[0], mapOptions);
         var marker = new google.maps.Marker({
             map: map,
-            position: map.getCenter(),
-            title: 'Click to zoom'
+            position: map.getCenter()
         });
         var infowindow = new google.maps.InfoWindow({
             content: "<b>Seasons</b><br/>Hotel Guest House<br/> Albena"
