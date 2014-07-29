@@ -10,13 +10,13 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    function init() {
+    var init = function () {
         $mapCanvas = $("#map-canvas");
         $mapDirections = $("#map-directions");
         loadMap();
     }
 
-    function loadMap(){
+    var loadMap = function (){
         map = new google.maps.Map($mapCanvas[0], mapOptions);
         var marker = new google.maps.Marker({
             map: map,
@@ -31,10 +31,10 @@
     }
 
     var removePage = function () {
-
+        toggleListeners("off");
     }
 
-    var createMap = function(start, $btn) {
+    var createMap = function (start, $btn) {
         var travel,
         directionsService = new google.maps.DirectionsService(),
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -61,7 +61,7 @@
         });
     };
 
-    function suggestRoute() {
+    var suggestRoute = function () {
         var $this = $(this);
 
         if ($mapDirections.is(':empty')) {
@@ -84,11 +84,15 @@
             loadMap();
         }
     }
-
-    $document.on("click", "#route-btn", suggestRoute)
-        .on({
-        "dataPageRefresh": removePage,
-        "ready": init
-    })
+    
+    var toggleListeners = function (binder){
+        $document[binder]("click", "#route-btn", suggestRoute)
+            [binder]({
+            "dataPageRefresh": removePage,
+            "ready": init
+        });
+    }
+    
+    toggleListeners("on");
     
 })(jQuery);
