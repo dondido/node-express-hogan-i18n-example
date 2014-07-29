@@ -34,7 +34,7 @@
         toggleListeners("off");
     }
 
-    var createMap = function (start, $btn) {
+    var createMap = function (start) {
         var travel,
         directionsService = new google.maps.DirectionsService(),
         directionsDisplay = new google.maps.DirectionsRenderer();
