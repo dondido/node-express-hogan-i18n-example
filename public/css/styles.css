@@ -131,10 +131,6 @@ nav.contact li:nth-child(6) a {
 	}
 }
 
-.navbar-checkbox {
-  	display: none;
-}
-
 .navbar-handle {
 	display: none;
 	cursor: pointer;
@@ -266,6 +262,8 @@ h3 {
 	justify-content: center;
 }
 
+.navbar-checkbox,
+.no-js #route-btn, 
 #lang-menu {
 	display: none;
 }
