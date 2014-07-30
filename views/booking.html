@@ -1,50 +1,35 @@
 <div class="row-fluid">
-    <div class="img-polaroid img-polaroid-main">
-        <img src="/images/960x340/7.jpg" alt="Garden Flower Pot"/>
-    </div>
+        <div class="img-polaroid img-polaroid-main">
+                <img src="/images/960x340/7.jpg" alt="Garden Flower Pot" />
+        </div>
 </div>
 <section class="row-fluid">
-    <h2>{{#__}}booking{{/__}}</h2>
-    <p>
-        {{#__}}locationtmaindesc{{/__}}
-    </p>
+        <h2>{{#__}}booking{{/__}}</h2>
+        <p>
+                {{#__}}locationtmaindesc{{/__}}
+        </p>
 </section>
-<fieldset>
-<p>{{#__}}selectaflat{{/__}} ({{#__}}required{{/__}})<span class="input-prepend"><br>
+<form method="post">
+        <p>{{#__}}selectaflat{{/__}}<span class="input-prepend"><br>
     <span class="add-on"><i class="icon-home"></i></span>
-    <span class="wpcf7-form-control-wrap menu-262">
-    <select name="menu-262" id="Flats" aria-required="true" aria-invalid="false">
-        <option value="Flat 1">{{#__}}flat{{/__}} 1</option>
-        <option value="Flat 2">{{#__}}flat{{/__}} 2</option>
-        <option value="Flat 3">{{#__}}flat{{/__}} 3</option>
-        <option value="Flat 4">{{#__}}flat{{/__}} 4</option>
-        <option value="Whole House">Whole House</option>
-    </select></span></span></p>
-<p>Select a reservation start date (required)<span class="input-prepend"><br>
+                <select name="menu-262" id="Flats" aria-required="true" aria-invalid="false">
+                        <option value="Flat 1">{{#__}}flat{{/__}} 1</option>
+                        <option value="Flat 2">{{#__}}flat{{/__}} 2</option>
+                        <option value="Flat 3">{{#__}}flat{{/__}} 3</option>
+                        <option value="Flat 4">{{#__}}flat{{/__}} 4</option>
+                        <option value="Whole House">Whole House</option>
+                </select>
+                </span>
+        </p>
+        <p>{{#__}}selectareservationstartdate{{/__}}<span class="input-prepend"><br>
    <span class="add-on"><i class="icon-calendar"></i></span></span>
-   <input type="text" name="date-159" value="" size="40" class="hasDatepicker" id="datepicker" aria-required="true">
-   </p>
+                <input type="text" name="date-159" value="" size="40" class="hasDatepicker" id="datepicker" aria-required="true">
+        </p>
 
-<p>Select a duaration in days<span class="input-prepend"><br>
+        <p>{{#__}}selectaduarationindays{{/__}}<span class="input-prepend"><br>
    <span class="add-on"><i class="icon-resize-horizontal"></i></span></span>
-   <input type="text" name="text-266" value="1" size="40" aria-invalid="false">
-   </p>
-
-
-
-    <p>{{#__}}yourname{{/__}} ({{#__}}required{{/__}})<span class="input-prepend"><br>
-        <span class="add-on"><i class="icon-user"></i></span></span>
-        <input class="get-value" type="text" name="username" value="" size="40" aria-required="true" aria-invalid="false">
-    </p>
-    <p>{{#__}}youremail{{/__}} ({{#__}}required{{/__}})<span class="input-prepend"><br>
-        <span class="add-on"><i class="icon-envelope"></i></span></span>
-            <input class="get-value" type="email" name="useremail" value="" size="40" aria-required="true" aria-invalid="false">
+                <input type="text" name="text-266" value="1" size="40" aria-invalid="false">
         </p>
-        <p>{{#__}}Subject{{/__}}<br>
-            <input class="get-value" type="text" name="subject" value="" size="40" aria-invalid="false">
-        </p>
-    <p>{{#__}}yourmessage{{/__}}<br>
-        <textarea class="get-value" name="message" cols="40" rows="10" aria-invalid="false"></textarea>
-    </p>
-    {{> submit}}
-</fieldset>
+        {{> basicform}} {{> submit}}
+</form>
+<script src="/../js/basic_form.js"></script>
