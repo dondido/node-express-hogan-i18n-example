@@ -8,9 +8,7 @@
 	};
 	
 	var removePage = function(){
-		// reenable the inputs
-		$document.off("submit","form", this.submitForm)
-			.off("dataPageRefresh", this.removePage);
+		toggleListeners("off");
 	};
 	
 	var submitForm = function(e){
@@ -32,13 +30,7 @@
     		req = $.ajax(
 		{
 		        type: "POST",
-		        data : postData,
-			success: function(resp) {
-				console.log("resp",resp);
-			},
-			error: function(req, status, err) {
-				console.log('something went wrong', status, err);
-			}
+		        data : postData
 		});
 
 		// callback handler that will be called on success
@@ -63,8 +55,12 @@
 		e.preventDefault();
 	}
 	
-	$document.on("submit","form", submitForm)
-		.on("dataPageRefresh", removePage);
+	var toggleListeners = function (binder){
+	        $document[binder]("submit","form", submitForm)
+			[binder]("dataPageRefresh", removePage);
+	}
+	
+	toggleListeners("on");
 	
 
 })(jQuery);
