@@ -1,5 +1,6 @@
 (function($) {
-	var $document = $(document);
+	var $document = $(document),
+	$inputs;
 	
 	var resetForm = function(){
 		// reenable the inputs
@@ -14,12 +15,9 @@
 	var submitForm = function(e){
 		var $form = $(this),
 		req,// variable to hold request
-		emailstatus = '#subnit-fail';
-		// Get some values from elements on the page:
-    		var postData = $form.serializeArray();
+		emailstatus = '#submit-fail';
     		// let's select and cache all the fields
-    		var $inputs = $form.find("input, select, button, textarea");
-
+    		$inputs = $form.find("input, select, button, textarea");
 
 		// let's disable the inputs for the duration of the ajax request
 	        // Note: we disable elements AFTER the form data has been serialized.
@@ -30,7 +28,7 @@
     		req = $.ajax(
 		{
 		        type: "POST",
-		        data : postData
+		        data : $form.serializeArray()
 		});
 
 		// callback handler that will be called on success
@@ -62,5 +60,4 @@
 	
 	toggleListeners("on");
 	
-
 })(jQuery);
