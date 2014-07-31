@@ -2,11 +2,11 @@
 	var $document = $(document),
 	initialNavigation = true,
 	defaultPath = location.pathname;
-	
-	
+
+
 	var init = function(){
 		$("html").removeClass("no-js");
-	}
+	};
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
 	var updatePage = function(e, data) {
@@ -33,14 +33,16 @@
 			success: function(resp) {
 				/* History API will only get populated if the request is not made
 				using onPopState event listener(forward or backward browser navigation). */
-				data.pushState && history.pushState({url: resp.url}, resp.title, resp.url);
+				if (data.pushState) {
+					history.pushState({url: resp.url}, resp.title, resp.url);
+				}
 				$(document).trigger('dataPageRefresh', resp);
 			},
 			error: function(req, status, err) {
 				console.log('something went wrong', status, err);
 			}
 		});
-	}
+	};
 
 	/* The beauty of this method is that it requires very little change to our application
 	and we can share url routes with both the client and the server. Additionally, because
@@ -59,7 +61,7 @@
 		}
 		requestJSON({pushState: 1, url: href});
 	};
-	
+
 	/*
 	The first request to the server is always a normal request. The server then returns
 	the page in the normal fashion - rendered entirely on the server side.
@@ -70,7 +72,7 @@
 	*/
 	var navigate = function(e) {
 		var $this, href;
-		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which != undefined && e.which > 1)) {
+		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which !== undefined && e.which > 1)) {
 			return;
 		}
 		href = $this.attr('href');
@@ -78,7 +80,7 @@
 			e.preventDefault();
 			$this.trigger('uiNavigate', href);
 		}
-		
+
 	};
 
 	var setTitle = function(e, data) {
@@ -93,20 +95,20 @@
 		if (e.state) {
 			// Update state
 			if (e.state.url) {
-				requestJSON({pushState: 0, url: e.state.url})
+				requestJSON({pushState: 0, url: e.state.url});
 			} else {
-				updatePage(e, e.state)
+				updatePage(e, e.state);
 			}
 		}
 	};
-	
+
 	/*
 	adds a listener for the “beforeunload” event that uses replaceState to remove the state 
 	associated with the current URL. This way when the user hits the back button, the 
 	“popstate” event will ﬁre with a “state” property of null, and the aforementioned 
 	“popstate” event listener will just ignore it.
 	*/
-	var destroyState = function (e) {
+	var destroyState = function () {
  		history.replaceState(null, document.title, window.location.href);
 	};
 
