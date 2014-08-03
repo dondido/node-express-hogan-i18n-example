@@ -22,6 +22,7 @@ exports.connect = function(req, res) {
   localeIndex,
   cssList = [],
   cssrouterpage,
+  headers,
   cssrouterpagemorefiles,
   language = req.params.language,
   langList = [
@@ -88,21 +89,22 @@ exports.connect = function(req, res) {
       }
     });
   } else {
-
+    headers = req.headers;
     if (!language) {
-      langCookie = req.headers.cookie || '';
+      langCookie = headers.cookie || '';
       langCookieIndex = langCookie.indexOf(langStr);
       language = langCookieIndex ==-1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1,2);  
-    } else if (req.headers.referer && req.headers.referer.indexOf(req.headers.host)!=-1 && page == 'refresh'){
-      urlList = req.headers.referer.replace("http://" + req.headers.host, '').split('/');
+    } else if (headers.referer && headers.referer.indexOf(headers.host)!=-1 && page == 'refresh'){
+      urlList = headers.referer.replace("http://" + headers.host, '').split('/');
       urlList[1] = language;
       page = urlList[2];
-      
     }
     
     localeIndex = localeList.indexOf(language);
     res.locals.lang = language;
-    ~ localeIndex || (language = 'en');
+    if (localeIndex === -1) {
+      language = 'en';
+    };
     req.setLocale(language);
 
     langList[localeIndex].link = false;
