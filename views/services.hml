@@ -4,6 +4,8 @@
     </div>
 </div>
 <section class="row-fluid">
-    	<h2>{{#__}}services{{/__}}</h2>
-	<p>{{#__}}servicesmaindesc{{/__}}</p>
+    <h2>{{#__}}booking{{/__}}</h2>
+    <p>
+        {{#__}}servivestmaindesc{{/__}}
+    </p>
 </section>

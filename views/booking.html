@@ -10,26 +10,29 @@
         </p>
 </section>
 <form method="post">
-        <p>{{#__}}selectaflat{{/__}}<span class="input-prepend"><br>
-    <span class="add-on"><i class="icon-home"></i></span>
-                <select name="menu-262" id="Flats" aria-required="true" aria-invalid="false">
+        {{#__}}selectaflat{{/__}}
+        <p class="input-prepend">
+            <span class="add-on"><i class="icon-home"></i></span><!--
+                --><select name="menu-262" id="Flats" aria-required="true" aria-invalid="false">
                         <option value="Flat 1">{{#__}}flat{{/__}} 1</option>
                         <option value="Flat 2">{{#__}}flat{{/__}} 2</option>
                         <option value="Flat 3">{{#__}}flat{{/__}} 3</option>
                         <option value="Flat 4">{{#__}}flat{{/__}} 4</option>
                         <option value="Whole House">Whole House</option>
                 </select>
-                </span>
         </p>
-        <p>{{#__}}selectareservationstartdate{{/__}}<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-calendar"></i></span></span>
-                <input type="text" name="date-159" value="" size="40" class="hasDatepicker" id="datepicker" aria-required="true">
+        {{#__}}selectareservationstartdate{{/__}}
+        <p class="input-prepend">
+                <span class="add-on"><i class="icon-calendar"></i></span>
+                <input type="text" name="start-date" id="datepicker" aria-required="true" placeholder="DD/MM/YYYY">
         </p>
-
-        <p>{{#__}}selectaduarationindays{{/__}}<span class="input-prepend"><br>
-   <span class="add-on"><i class="icon-resize-horizontal"></i></span></span>
-                <input type="text" name="text-266" value="1" size="40" aria-invalid="false">
+        {{#__}}selectaduarationindays{{/__}}
+        <p class="input-prepend"> 
+            <span class="add-on"><i class="icon-resize-horizontal"></i></span>
+            <input  type="number" name="quantity" min="1" max="50" aria-invalid="false">
         </p>
         {{> basicform}} {{> submit}}
 </form>
-<script src="/../js/basic_form.js"></script>
+<script src="/../js/libs/jquery-ui.min.js"></script>
+<script src="/../js/datepicker.js"></script>
+<script src="/../js/basic-form.js"></script>

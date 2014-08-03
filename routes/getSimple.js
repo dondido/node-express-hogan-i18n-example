@@ -46,7 +46,7 @@ exports.connect = function(req, res) {
       };
     };
   }
-
+ 
   res.locals.cssList = cssList;
   res.locals.currentpage = page; 
   // mustache helper

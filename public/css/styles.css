@@ -17,7 +17,6 @@ nav {
 }
 
 nav ul {
-	/*font-size: 120%;*/
 	list-style: none;
 	text-align: center;
 	padding: 0;
@@ -58,27 +57,30 @@ nav li a {
 nav.home li:nth-child(1),
 nav.booking li:nth-child(2),
 nav.gallery li:nth-child(3),
-nav.rates li:nth-child(4),
-nav.location li:nth-child(5),
-nav.contact li:nth-child(6) {
+nav.services li:nth-child(4),
+nav.rates li:nth-child(5),
+nav.location li:nth-child(6),
+nav.contact li:nth-child(7) {
 	background: #0088cc;
 }
 
 nav.home li:not(:nth-child(1)) a:hover,
 nav.booking li:not(:nth-child(2)) a:hover,
 nav.gallery li:not(:nth-child(3)) a:hover,
-nav.rates li:not(:nth-child(4)) a:hover,
-nav.location li:not(:nth-child(5)) a:hover,
-nav.contact li:not(:nth-child(6)) a:hover {
+nav.services li:not(:nth-child(4)) a:hover,
+nav.rates li:not(:nth-child(5)) a:hover,
+nav.location li:not(:nth-child(6)) a:hover,
+nav.contact li:not(:nth-child(7)) a:hover {
 	background: #e7e5e3;
 }
 
 nav.home li:nth-child(1) a,
 nav.booking li:nth-child(2) a,
 nav.gallery li:nth-child(3) a,
-nav.rates li:nth-child(4) a,
-nav.location li:nth-child(5) a,
-nav.contact li:nth-child(6) a {
+nav.services li:nth-child(4) a,
+nav.rates li:nth-child(5) a,
+nav.location li:nth-child(6) a,
+nav.contact li:nth-child(7) a {
 	color: white;
 }
 

@@ -44,6 +44,7 @@ app.set('partials', {
 	lang: "lang",
 	header: "header",
 	footer: "footer",
+	basicform: "basicform",
 	submit: "submit"
 });
 
