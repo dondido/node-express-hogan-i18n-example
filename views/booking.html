@@ -5,15 +5,13 @@
 </div>
 <section class="row-fluid">
         <h2>{{#__}}booking{{/__}}</h2>
-        <p>
-                {{#__}}locationtmaindesc{{/__}}
-        </p>
+        <p>{{#__}}locationtmaindesc{{/__}}</p>
 </section>
 <form method="post">
         {{#__}}selectaflat{{/__}}
         <p class="input-prepend">
             <span class="add-on"><i class="icon-home"></i></span><!--
-                --><select name="menu-262" id="Flats" aria-required="true" aria-invalid="false">
+                --><select name="flatselection" id="Flats">
                         <option value="Flat 1">{{#__}}flat{{/__}} 1</option>
                         <option value="Flat 2">{{#__}}flat{{/__}} 2</option>
                         <option value="Flat 3">{{#__}}flat{{/__}} 3</option>
@@ -24,12 +22,12 @@
         {{#__}}selectareservationstartdate{{/__}}
         <p class="input-prepend">
                 <span class="add-on"><i class="icon-calendar"></i></span>
-                <input type="text" name="start-date" id="datepicker" aria-required="true" placeholder="DD/MM/YYYY">
+                <input type="text" name="startdate" id="datepicker" placeholder="DD/MM/YYYY">
         </p>
         {{#__}}selectaduarationindays{{/__}}
         <p class="input-prepend"> 
             <span class="add-on"><i class="icon-resize-horizontal"></i></span>
-            <input  type="number" name="quantity" min="1" max="50" aria-invalid="false">
+            <input type="number" name="duration" min="1" max="50">
         </p>
         {{> basicform}} {{> submit}}
 </form>
