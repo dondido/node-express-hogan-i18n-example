@@ -19,6 +19,7 @@
 	"your": "Your",
 	"name": "Name",
 	"email": "Email",
+	"phonenumber": "Phone Number",
 	"subject": "Subject",
 	"message": "Message",
 	"required": "required",
@@ -61,5 +62,5 @@
 	"blog": "blog",
 	"Subject": "Subject",
 	"sending__": "sending__",
-	"flat": "flat"
+	"flat": "Flat"
 }

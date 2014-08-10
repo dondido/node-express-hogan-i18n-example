@@ -22,7 +22,7 @@
 	height: 14px;
 	line-height: 14px;
 	vertical-align: text-top;
-	background-image: url("../images/icon/glyphicons-halflings.png");
+	background-image: url("../images/icon/glyphicons.png");
 	background-position: 14px 14px;
 	background-repeat: no-repeat;
 	margin-top: 1px;
@@ -38,6 +38,7 @@
     -webkit-border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
+    border: 1px solid #cccccc;
 }
 
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
@@ -81,6 +82,10 @@ textarea {
 	background-position: -72px 0;
 }
 
+.icon-phone {
+	background-position: 0 0;
+}
+
 .icon-home {
 	background-position: 0 -24px;
 }
@@ -93,19 +98,25 @@ textarea {
 	background-position: -456px -118px;
 }
 
+.submit-pending #submit-pending,
+.submit-fail #submit-fail,
+.submit-success #submit-success,
 #submit-success:target,
 #submit-fail:target {
 	display: block;
 }
 
-.submit-states {
+#submit-pending,
+#reset-form,
+#submit-success,
+#submit-fail {
 	display: none;
 }
 
 .input-prepend input {
-    	width: -moz-calc(100% - 42px);
-	width: -webkit-calc(100% - 42px);
-	width: calc(100% - 42px);
+    	width: -moz-calc(100% - 28px);
+	width: -webkit-calc(100% - 28px);
+	width: calc(100% - 28px);
 }
 
 .add-on + select,
@@ -124,3 +135,4 @@ textarea {
 .get-value {
 	width: 100%;
 }
+

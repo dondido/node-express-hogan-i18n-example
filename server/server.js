@@ -15,6 +15,9 @@ var router = express.Router();
 var path = require("path");
 var oneDay = 86400000;
 
+// Switch off the default 'X-Powered-By: Express' header
+app.disable('x-powered-by');
+
 // SERVER CONFIGURATION
 // ====================
 // Set View Engine
@@ -72,6 +75,13 @@ if ('development' == app.get('env')) {
 	app.use(errorHandler());
 }
 
+// prevent framing of everything.  content underneath that needs to be
+// framed must explicitly remove the x-frame-options
+app.use(function(req, resp, next) {
+  resp.setHeader('x-frame-options', 'DENY');
+  next();
+});
+
 app.post('/:language?/:page',  postSimple.connect);
 app.get('/:language?/:page?/:more?', getSimple.connect);
 
@@ -79,4 +89,3 @@ app.get('/:language?/:page?/:more?', getSimple.connect);
 http.createServer(app).listen(port);
 
 console.log('Welcome to node-express-hogan-i18n-example!\ncurl http://localhost:' + port + '\nto start using it');
-

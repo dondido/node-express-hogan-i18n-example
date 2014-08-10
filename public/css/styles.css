@@ -149,6 +149,7 @@ nav.contact li:nth-child(7) a {
 		white 60%, white 80%, 
 		#0088cc 80%, #0088cc 100%
  	);
+ 	background: url("menu-btn.svg")\9;
 }
 
 footer,
@@ -189,6 +190,10 @@ h2.row-fluid {
 	.row-fluid .span4 {
 		width: 100%;
 	}
+}
+
+a img {
+	border: 0;
 }
 
 .img-polaroid {
@@ -241,12 +246,13 @@ h3 {
 }
 
 #lang-menu:target {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	width: 100%;
 	height: 100%;
 	background: rgba(1,1,1,0.4);
 	z-index: 1;
+	display: block;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -moz-box;
@@ -278,6 +284,15 @@ h3 {
 #lang-menu > ul:before {
 	height: 100%;
 }
+
+/* IE9 specific*/
+#lang-menu > ul { 
+	position: absolute\9;
+	margin: auto\9;
+	top: 30%\9;
+	left: 0\9;
+	right: 0\9;
+}  
 
 #lang-menu > ul {
 	padding: 0;

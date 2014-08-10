@@ -25,7 +25,7 @@ exports.init = function(express) {
   return exports;
 }
 
-exports.connect = function(req, res, next) {
+exports.connect = function(req, res) {
 var emailLocals = merge(req.body, {
     layout: false,
     to: emailCfg.to, // REQUIRED. This can be a comma delimited string just like a normal email to field. 

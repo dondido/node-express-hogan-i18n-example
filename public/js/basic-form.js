@@ -1,32 +1,20 @@
 (function($) {
 	var $document = $(document),
-	$inputs;
-	
-	var resetForm = function(){
-		// reenable the inputs
-		$inputs.prop("disabled", false);
-		$("submit-states").removeClass("active");
-	};
-	
-	var removePage = function(){
+	removePage = function(){
 		toggleListeners("off");
-	};
-	
-	var submitForm = function(e){
+	},
+	submitForm = function(e){
 		var $form = $(this),
 		req,// variable to hold request
-		emailstatus = '#submit-fail';
+		emailstatus = 'submit-fail',
     		// let's select and cache all the fields
     		$inputs = $form.find("input, select, button, textarea");
 
-		// let's disable the inputs for the duration of the ajax request
-	        // Note: we disable elements AFTER the form data has been serialized.
-	        // Disabled form elements will not be serialized.
-	        $inputs.prop("disabled", true);
-		
+    		// show message while waiting for the ajax responce
+    		$form.addClass("submit-pending");
+
 		// fire off the request to the node server
-    		req = $.ajax(
-		{
+    		req = $.ajax({
 		        type: "POST",
 		        data : $form.serializeArray()
 		});
@@ -45,15 +33,26 @@
 		// callback handler that will be called regardless
 		// if the request failed or succeeded
 		req.always(function () {
-			$("#reset-form").click(resetForm);
-			$(emailstatus).addClass("active");
+			$("#reset-form").on('click', function(){
+				$(this).off();
+				$form.removeClass(emailstatus);
+				// reenable the inputs
+				$inputs.prop("disabled", false);
+			});
+			$form
+				.removeClass("submit-pending")
+				.addClass(emailstatus);
 		});
+
+		// let's disable the inputs for the duration of the ajax request
+	        // Note: we disable elements AFTER the form data has been serialized.
+	        // Disabled form elements will not be serialized.
+	        $inputs.prop("disabled", true);
 
 		// prevent default posting of form
 		e.preventDefault();
-	}
-	
-	var toggleListeners = function (binder){
+	},
+	toggleListeners = function (binder){
 	        $document[binder]("submit","form", submitForm)
 			[binder]("dataPageRefresh", removePage);
 	}
