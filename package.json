@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Guess House Seasons",
   "title": "node-express-hogan-i18n-example",
   "description": "Simple node express hogan i18n responsive app example",
   "version": "0.0.1",
@@ -19,6 +19,9 @@
     "hogan",
     "i18n"
   ],
+  "scripts": {
+    "start": "node server/server.js"
+  },
   "license": "MIT",
   "devDependencies": {
     "express": "~4.0.0",
