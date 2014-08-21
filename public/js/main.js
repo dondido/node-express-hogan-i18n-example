@@ -1,11 +1,23 @@
 (function($) {
 	var $document = $(document),
 	initialNavigation = true,
+	$head,
+	$yield,
+	$mainNav,
 	defaultPath = location.pathname;
 
-
 	var init = function(){
-		$("html").removeClass("no-js");
+		if (history.pushState){
+			$head = $("head");
+			$yield = $("#yield");
+			$mainNav = $("#main-nav");
+			$("html").removeClass("no-js");
+			$document.on({
+				"dataPageRefresh": updatePage,
+				"uiNavigate": navigateUsingPushState,
+				"uiPageChanged": setTitle
+			}).on("click", ".js-nav", navigate);
+		};
 	};
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
@@ -13,11 +25,11 @@
 		var cl;
 		if ('cssList' in data){
 			for (cl in data.cssList){
-				$('head').append('<link href="/css/' + data.cssList[cl] + '.css" rel="stylesheet" />');
+				$head.append('<link href="/css/' + data.cssList[cl] + '.css" rel="stylesheet" />');
 			}
 		}
-		$("#yield").html(data.html);
-		$("#main-nav").removeClass().addClass(data.navSelector);
+		$yield.html(data.html);
+		$mainNav.removeClass().addClass(data.navSelector);
 	};
 
 	/* The trick with the AJAX request is that when it is made
@@ -36,7 +48,7 @@
 				if (data.pushState) {
 					history.pushState({url: resp.url}, resp.title, resp.url);
 				}
-				$(document).trigger('dataPageRefresh', resp);
+				$document.trigger('dataPageRefresh', resp);
 			},
 			error: function(req, status, err) {
 				console.log('something went wrong', status, err);
@@ -52,8 +64,8 @@
 	which have javascript disabled is fully provided. */
 	var navigateUsingPushState = function(e, href) {
 		var currentState = {
-			navSelector: $("#main-nav")[0].className,
-			html: $("#yield").html()
+			navSelector: $mainNav[0].className,
+			html: $yield.html()
 		};
 		if (initialNavigation) {
 			history.replaceState(currentState, "Home", defaultPath);
@@ -112,12 +124,7 @@
  		history.replaceState(null, document.title, window.location.href);
 	};
 
-	$document.on({
-		"ready": init,
-		"dataPageRefresh": updatePage,
-		"uiNavigate": navigateUsingPushState,
-		"uiPageChanged": setTitle
-	}).on("click", ".js-nav", navigate);
+	$document.on("ready", init);
 
 	$(window).on({
 		"beforeunload": destroyState,
