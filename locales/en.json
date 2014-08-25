@@ -23,7 +23,7 @@
 	"subject": "Subject",
 	"message": "Message",
 	"required": "required",
-	"prices": "prices",
+	"prices": "Prices",
 	"exteriorinteriorphotos": "Exterior and Interior Photos",
 	"diningareaphotos": "Dining Area Photos",
 	"flat1photos": "First Floor Flat Photos",
@@ -60,5 +60,15 @@
 	"contactmaindesc": "To arrange a convenient time to view the flats, make a booking or for any other query, please use the form provided below and a member of our friendly staff will get back to you (usually within 2 working days).<br> We value your feedback, both good and not-so-good. Hopefully you will not need to send us any of the latter but, if you do have any cause for complaint, please do not hesitate to contact us - your comments are important to us and will help us improve our service to you and other customers.",
 	"bookingmaindesc": "If you would like to make any bookings or general enquiries please use the form below and a member of our friendly staff will get back to you (usually within 2 working days). Reservations are accepted by phone anytime before the first day of the rental. It is particularly important to make a reservation for offsite rentals, as there are limited quantities of the equipment available. Requests made for offsites after 11:00 am generally cannot be set up until the next day.",
 	"locationtmaindesc": "Staff are available to arrange pick-up services, ticket bookings and assist with postal needs. Please arrange this service while booking the accommodation. Transport and transfer service is subject to additional charge. You can use the google map widget to get a better understanding of the exact location. Driving Route Planner is also included.",
-	"servicesmaindesc": "Don't want another summer of dragging your umbrella and chairs back and forth across the hot sand?  Can we do the next beach replenishment from the back seat of your car?  Try something different this year and rent your umbrella and chairs from our beach attendants. Our staff will set your equipment at the start of the day and break it down when you're finished for the day.  You'll relax in style in our comfortable chairs under a nice cool umbrella. No muss, no fuss! Chairs and umbrellas are available for use daily at 10 a.m. Available only for the summer season.</br>Staff are available to arrange pick-up services, getting on and off the beach, ticket bookings and assist with postal needs. We also provide freshly prepared home cooked meals across breakfast, lunch and dinner service. This service is available on demand and must be requested in advance. There is no menu, so you should just ask what would you prefer. All requests will be met where possible. All services are subject to additional charge."
+	"Subject": "Subject",
+	"sending__": "sending__",
+	"flexible": "flexible",
+	"beachumbrellaandchairsetrentals": "Beach umbrella and chair set rentals",
+	"beachumbrellaandchairdesc": "Don't want another summer of dragging your umbrella and chairs back and forth across the hot sand? Try something different this year and rent your umbrella and chairs from our beach attendants. Our staff will set your equipment at the start of the day and break it down when you're finished for the day.  You'll relax in style in our comfortable chairs under a nice cool umbrella. No muss, no fuss! Chairs and umbrellas are available for use daily at 9 a.m. Available only for the summer season.",
+	"pickupservices": "Pick-up services",
+	"pickupservicesdesc": "Staff are available to arrange pick-up services, getting on and off the beach, ticket bookings and assist with postal needs. Please arrange this service while booking the accommodation. Transport and transfer service might be subject to additional charge.",
+	"food&beverages": "Food & Beverages",
+	"food&beveragesdesc": "We provide freshly prepared home cooked meals across breakfast, lunch and dinner service. This service is available on demand and must be requested in advance. There is no menu, so you should just ask what would you prefer. All requests will be met where possible. All services are subject to additional charge.",
+	"English": "English",
+	"Bulgarian": "Bulgarian"
 }

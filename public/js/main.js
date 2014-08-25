@@ -11,13 +11,13 @@
 			$head = $("head");
 			$yield = $("#yield");
 			$mainNav = $("#main-nav");
-			$("html").removeClass("no-js");
 			$document.on({
 				"dataPageRefresh": updatePage,
 				"uiNavigate": navigateUsingPushState,
 				"uiPageChanged": setTitle
 			}).on("click", ".js-nav", navigate);
 		};
+		$("html").removeClass("no-js");
 	};
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
