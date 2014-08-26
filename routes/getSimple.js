@@ -1,11 +1,11 @@
-var localeList = ['en', 'bg'],
+var localeList = ["en", "bg"],
   i18n = require("i18n"),
-  cssrouter = require(__dirname +'/../cssrouter/index.js');
+  cssrouter = require(__dirname +"/../cssrouter/index.js");
 
 // setup some locales - other locales will default to en silently
 i18n.configure({
     locales: localeList,
-    directory: __dirname + '/../locales'
+    directory: __dirname + "/../locales"
 });
 
 exports.i18n = i18n;
@@ -16,7 +16,7 @@ exports.i18n = i18n;
 exports.connect = function(req, res) {
 
   var urlList,
-  langStr = 'language',
+  langStr = "language",
   langCookie,
   langCookieIndex,
   localeIndex,
@@ -26,11 +26,11 @@ exports.connect = function(req, res) {
   cssrouterpagemorefiles,
   language = req.params.language,
   langList = [
-    { 'prefix': 'en', 'langstr': 'English', 'link': true },
-    { 'prefix': 'bg', 'langstr': 'Bulgarian', 'link': true }, 
+    { "prefix": "en", "langstr": "English", "link": true },
+    { "prefix": "bg", "langstr": "Bulgarian", "link": true }, 
   ],
   i,
-  page = req.params.page || 'home',
+  page = req.params.page || "home",
   more = req.params.more;
 
   if (page && cssrouter[page]) {
@@ -67,7 +67,7 @@ exports.connect = function(req, res) {
     a our request actually contains normal HTML that has been generated
     on the server and assigned to a property. This HTML is only a fragment
     of the full page and using Javascript on the client this fragment
-    is substituted in for the last page's content. */
+    is substituted in for the last page"s content. */
     
     res.render(more || page, {
       layout: false
@@ -91,11 +91,11 @@ exports.connect = function(req, res) {
   } else {
     headers = req.headers;
     if (!language) {
-      langCookie = headers.cookie || '';
+      langCookie = headers.cookie || "";
       langCookieIndex = langCookie.indexOf(langStr);
       language = langCookieIndex ==-1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1,2);  
-    } else if (headers.referer && headers.referer.indexOf(headers.host)!=-1 && page == 'refresh'){
-      urlList = headers.referer.replace("http://" + headers.host, '').split('/');
+    } else if (headers.referer && headers.referer.indexOf(headers.host)!=-1 && page == "refresh"){
+      urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       urlList[1] = language;
       page = urlList[2];
     }
@@ -103,13 +103,13 @@ exports.connect = function(req, res) {
     localeIndex = localeList.indexOf(language);
     res.locals.lang = language;
     if (localeIndex === -1) {
-      language = 'en';
+      language = "en";
     };
     req.setLocale(language);
 
     langList[localeIndex].link = false;
 
-    if (language != 'en'){
+    if (language != "en"){
       for (i in langList){
         langList[i].langstr = i18n.__(langList[i].langstr);
       }
@@ -117,7 +117,7 @@ exports.connect = function(req, res) {
     
     res.locals.langList = langList;
 
-    res.cookie('language',  language, { maxAge: 900000 });
-    urlList ? res.redirect(urlList.join('/')) : res.render(more || page);
+    res.cookie("language",  language, { maxAge: 900000 });
+    urlList ? res.redirect(urlList.join("/")) : res.render(more || page);
   }
 }
