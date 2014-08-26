@@ -8,7 +8,7 @@ i18n.configure({
     directory: __dirname + "/../locales"
 });
 
-exports.i18n = i18n;
+// exports.i18n = i18n;
 
 /*
  * GET any page.
@@ -37,22 +37,22 @@ exports.connect = function(req, res) {
     cssrouterpage = cssrouter[page];
 
     if (cssrouterpage.files && cssrouterpage.files.length) {
-      cssList = cssList.concat(cssrouterpage.files)
-    };
+      cssList = cssList.concat(cssrouterpage.files);
+    }
   
     if (more && more in cssrouterpage) {
       cssrouterpagemorefiles = cssrouterpage[more].files;
       if (cssrouterpagemorefiles && cssrouterpagemorefiles.length) {
         cssList.concat(cssrouterpagemorefiles);
-      };
-    };
+      }
+    }
   }
  
   res.locals.cssList = cssList;
   res.locals.currentpage = page; 
   // mustache helper
   res.locals.__ = function () {
-    return function (text, render) {
+    return function () {
       return i18n.__.apply(req, arguments);
     };
   };
@@ -85,7 +85,7 @@ exports.connect = function(req, res) {
           navSelector: page,
           cssList: cssList,
           html: html
-        })
+        });
       }
     });
   } else {
@@ -104,7 +104,7 @@ exports.connect = function(req, res) {
     res.locals.lang = language;
     if (localeIndex === -1) {
       language = "en";
-    };
+    }
     req.setLocale(language);
 
     langList[localeIndex].link = false;
@@ -120,4 +120,4 @@ exports.connect = function(req, res) {
     res.cookie("language",  language, { maxAge: 900000 });
     urlList ? res.redirect(urlList.join("/")) : res.render(more || page);
   }
-}
+};
