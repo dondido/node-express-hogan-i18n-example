@@ -54,6 +54,10 @@ nav li a {
 	padding: 3ex 1em 1ex;
 }
 
+#yield a:hover {
+	text-decoration: underline;
+}
+
 nav.home li:nth-child(1),
 nav.booking li:nth-child(2),
 nav.gallery li:nth-child(3),

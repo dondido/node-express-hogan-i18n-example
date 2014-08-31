@@ -8,7 +8,7 @@ i18n.configure({
     directory: __dirname + "/../locales"
 });
 
-// exports.i18n = i18n;
+exports.i18n = i18n;
 
 /*
  * GET any page.
