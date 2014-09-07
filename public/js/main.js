@@ -68,7 +68,7 @@
 			html: $yield.html()
 		};
 		if (initialNavigation) {
-			history.replaceState(currentState, "Home", defaultPath);
+			history.replaceState(currentState, "pagehome", defaultPath);
 			initialNavigation = false;
 		}
 		requestJSON({pushState: 1, url: href});
@@ -83,7 +83,8 @@
 	the only the changed content as a proprty and returns it in the response.
 	*/
 	var navigate = function(e) {
-		var $this, href;
+		var $this = $(this),
+		href;
 		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which !== undefined && e.which > 1)) {
 			return;
 		}

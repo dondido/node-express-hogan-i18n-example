@@ -30,7 +30,7 @@
 
 .input-append input, .input-prepend input, .input-append select, .input-prepend select, .input-append .uneditable-input, .input-prepend .uneditable-input {
     position: relative;
-    margin: 0;
+    margin-left: 0;
     font-size: 14px;
     line-height: 30px;
     height: 30px;
@@ -62,8 +62,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     border-radius: 3px;
 }
 
-input, textarea, select, .uneditable-input {
-    margin-bottom: 0;
+label > div {
+	margin-bottom: 5px;
 }
 
 input, textarea, .uneditable-input {

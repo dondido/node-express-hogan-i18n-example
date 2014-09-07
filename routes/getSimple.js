@@ -1,6 +1,15 @@
 var localeList = ["en", "bg"],
   i18n = require("i18n"),
+  urlrouter = require(__dirname +"/../urlrouter/index.js"),
   cssrouter = require(__dirname +"/../cssrouter/index.js");
+
+var getPageIndex = function(page){
+  var pageIndex;
+  if (page in urlrouter) {
+    pageIndex = urlrouter[page];
+  }
+  return pageIndex;
+}
 
 // setup some locales - other locales will default to en silently
 i18n.configure({
@@ -30,11 +39,15 @@ exports.connect = function(req, res) {
     { "prefix": "bg", "langstr": "Bulgarian", "link": true }, 
   ],
   i,
+  pageIndex,
   page = req.params.page || "home",
   more = req.params.more;
 
-  if (page && cssrouter[page]) {
-    cssrouterpage = cssrouter[page];
+  pageIndex = getPageIndex(page) || "home";
+  console.log('page', page, pageIndex)
+  if (pageIndex in cssrouter) {
+
+    cssrouterpage = cssrouter[pageIndex];
 
     if (cssrouterpage.files && cssrouterpage.files.length) {
       cssList = cssList.concat(cssrouterpage.files);
@@ -49,7 +62,8 @@ exports.connect = function(req, res) {
   }
  
   res.locals.cssList = cssList;
-  res.locals.currentpage = page; 
+  res.locals.currentpage = pageIndex; 
+  res.locals.title = i18n.__("title" + pageIndex);
   // mustache helper
   res.locals.__ = function () {
     return function () {
@@ -69,7 +83,7 @@ exports.connect = function(req, res) {
     of the full page and using Javascript on the client this fragment
     is substituted in for the last page"s content. */
     
-    res.render(more || page, {
+    res.render(more || pageIndex, {
       layout: false
     }, function(err, html) {
       if (err) {
@@ -80,9 +94,9 @@ exports.connect = function(req, res) {
         to be rendered and returned. If the request header is not requested with 
         XMLHttpRequest then the page is rendered like normal with the full view. */
         res.json({
-          title: page,
+          title: "page" + page,
           url: req.url,
-          navSelector: page,
+          navSelector: pageIndex,
           cssList: cssList,
           html: html
         });
@@ -97,7 +111,7 @@ exports.connect = function(req, res) {
     } else if (headers.referer && headers.referer.indexOf(headers.host)!=-1 && page == "refresh"){
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       urlList[1] = language;
-      page = urlList[2];
+      pageIndex = getPageIndex(urlList[2]);
     }
     
     localeIndex = localeList.indexOf(language);
@@ -118,6 +132,6 @@ exports.connect = function(req, res) {
     res.locals.langList = langList;
 
     res.cookie("language",  language, { maxAge: 900000 });
-    urlList ? res.redirect(urlList.join("/")) : res.render(more || page);
+    urlList ? res.redirect(urlList.join("/")) : res.render(more || pageIndex);
   }
 };
