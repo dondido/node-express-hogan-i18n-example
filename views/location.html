@@ -3,21 +3,24 @@
         <img src="/images/960x340/15.jpg" alt="Garden Flower Pot"/>
     </div>
 </div>
-<section class="row-fluid">
-    <h2>{{#__}}location{{/__}}</h2>
-    <p>
-        {{#__}}homelocation{{/__}}{{#__}}locationtmaindesc{{/__}}
-    </p>
-</section>
-<div class="row-fluid">
-    <div id="map-container">
-        <div id="map-canvas">
-            <noscript>
-                <img src="/images/map/Albena-Fish-Fish-Bird-View-Map-Pin.png" alt="Bird's eye Albena map"/>
-            </noscript>
+<section class="row-fluid" itemscope itemtype="http://schema.org/Hotel">
+    <div itemprop="location">
+        <meta itemprop="name" content="Seasons Guest House Lodge"/>
+        <h2>{{#__}}location{{/__}}</h2>
+        <p itemprop="description">
+            {{#__}}homelocation{{/__}}{{#__}}locationtmaindesc{{/__}}
+        </p>
+        <div id="map-container" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+            <div id="map-canvas" itemprop="maps">
+                <noscript>
+                    <img src="/images/map/Albena-Fish-Fish-Bird-View-Map-Pin.png" alt="Bird's eye Albena map"/>
+                </noscript>
+            </div>
+            <meta itemprop="latitude" content="43.382995" />
+            <meta itemprop="longitude" content="28.098228" />
+            <button class="btn btn-primary" type="button" id="route-btn" data-states='["{{#__}}suggestaroute{{/__}}", "{{#__}}returntotheoriginalmap{{/__}}"]'>{{#__}}suggestaroute{{/__}}</button>
+            <div id="map-directions"></div>
         </div>
-        <button class="btn btn-primary" type="button" id="route-btn" data-states='["{{#__}}suggestaroute{{/__}}", "{{#__}}returntotheoriginalmap{{/__}}"]'>{{#__}}suggestaroute{{/__}}</button>
-        <div id="map-directions"></div>
     </div>
-</div>
+</section>
 <script src="/../js/g-map.js"></script>
