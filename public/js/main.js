@@ -125,7 +125,7 @@
  		history.replaceState(null, document.title, window.location.href);
 	};
 
-	$document.on("ready", init);
+	$document.one("ready", init);
 
 	$(window).on({
 		"beforeunload": destroyState,

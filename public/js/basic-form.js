@@ -1,7 +1,7 @@
 (function($) {
 	var $document = $(document),
 	removePage = function(){
-		toggleListeners("off");
+		$document.off("submit", "form", submitForm)
 	},
 	submitForm = function(e){
 		var $form = $(this),
@@ -33,8 +33,7 @@
 		// callback handler that will be called regardless
 		// if the request failed or succeeded
 		req.always(function () {
-			$("#reset-form").on('click', function(){
-				$(this).off();
+			$("#reset-form").one('click', function(){
 				$form.removeClass(emailstatus);
 				// reenable the inputs
 				$inputs.prop("disabled", false);
@@ -51,12 +50,9 @@
 
 		// prevent default posting of form
 		e.preventDefault();
-	},
-	toggleListeners = function (binder){
-	        $document[binder]("submit","form", submitForm)
-			[binder]("dataPageRefresh", removePage);
-	}
+	};
 	
-	toggleListeners("on");
+	$document.on("submit", "form", submitForm)
+		one("dataPageRefresh", removePage);
 	
 })(jQuery);
