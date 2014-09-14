@@ -43,8 +43,8 @@ exports.connect = function(req, res) {
   page = req.params.page || "home",
   more = req.params.more;
 
-  pageIndex = getPageIndex(page) || "home";
-  console.log('page', page, pageIndex)
+  pageIndex = getPageIndex(page) || page;
+  console.log('page', page, pageIndex, req.url)
   if (pageIndex in cssrouter) {
 
     cssrouterpage = cssrouter[pageIndex];
@@ -108,7 +108,7 @@ exports.connect = function(req, res) {
       langCookie = headers.cookie || "";
       langCookieIndex = langCookie.indexOf(langStr);
       language = langCookieIndex ==-1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1,2);  
-    } else if (headers.referer && headers.referer.indexOf(headers.host)!=-1 && page == "refresh"){
+    } else if (headers.referer && headers.referer.indexOf(headers.host) != -1 && page == "refresh"){
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       urlList[1] = language;
       pageIndex = getPageIndex(urlList[2]);

@@ -121,11 +121,16 @@ footer,
 	padding-right: 20px;
 }
 
-.span4 {
+.span4,
+.span5 {
 	display: inline-block;
 	box-sizing: border-box;
 	vertical-align: top;
 	width: 33%;
+}
+
+.span5 {
+	width: 49%;
 }
 
 .span4 p {
@@ -148,6 +153,7 @@ h2.row-fluid {
 }
 
 @media (max-width: 768px) {
+	.row-fluid .span5,
 	.row-fluid .span4 {
 		width: 100%;
 	}
@@ -402,7 +408,7 @@ input[type="submit"] {
 @media (min-width: 768px){
 	.dl-horizontal dt {
 		float: left;
-		width: 260px;
+		width: 280px;
 		overflow: hidden;
 		clear: left;
 		text-align: right;
@@ -412,6 +418,15 @@ input[type="submit"] {
 	}
 
 	.dl-horizontal dd {
-		margin-left: 280px;
+		margin-left: 300px;
 	}
+}
+
+.fb-holder {
+	display: inline-block;
+	text-align: center;
+	margin-bottom: 2ex;
+}
+
+.contact-details {
 }

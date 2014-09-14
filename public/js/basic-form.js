@@ -5,8 +5,8 @@
 	},
 	submitForm = function(e){
 		var $form = $(this),
-		req,// variable to hold request
-		emailstatus = 'submit-fail',
+			req,// variable to hold request
+			emailstatus = 'submit-fail',
     		// let's select and cache all the fields
     		$inputs = $form.find("input, select, button, textarea");
 
@@ -14,7 +14,7 @@
     		$form.addClass("submit-pending");
 
 		// fire off the request to the node server
-    		req = $.ajax({
+    	req = $.ajax({
 		        type: "POST",
 		        data : $form.serializeArray()
 		});
@@ -44,15 +44,15 @@
 		});
 
 		// let's disable the inputs for the duration of the ajax request
-	        // Note: we disable elements AFTER the form data has been serialized.
-	        // Disabled form elements will not be serialized.
-	        $inputs.prop("disabled", true);
+        // Note: we disable elements AFTER the form data has been serialized.
+        // Disabled form elements will not be serialized.
+        $inputs.prop("disabled", true);
 
 		// prevent default posting of form
 		e.preventDefault();
 	};
 	
 	$document.on("submit", "form", submitForm)
-		one("dataPageRefresh", removePage);
+		.one("dataPageRefresh", removePage);
 	
 })(jQuery);
