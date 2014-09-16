@@ -1,13 +1,13 @@
 <div id="fb-root"></div>
-<div class="row-fluid">
-    <div class="img-polaroid img-polaroid-main">
+<section class="row-fluid" itemscope itemtype="http://schema.org/Hotel">
+    <figure class="img-polaroid img-polaroid-main" itemprop="photo" itemscope itemtype="http://schema.org/Photograph">
         <img src="/images/960x340/13.jpg" alt="Garden Flower Pot"/>
-    </div>
-</div>
-<section class="row-fluid">
+    </figure>
   <h2>{{#__}}contact{{/__}}</h2>
-  <p>
+  <p itemprop="location" itemscope itemtype="http://schema.org/Place">
+    <span itemprop="description">
       {{#__}}contactmaindesc{{/__}}
+    </span>
   </p>
   <form method="post">
       {{> basicform}}
@@ -15,7 +15,7 @@
   </form>
   <div class="span5 contact-details">
     <h2>{{#__}}contactdetails{{/__}}</h2>
-    <div itemscope itemtype="http://schema.org/Person">
+    <div itemprop="founder" itemscope itemtype="http://schema.org/Person">
         <span itemprop="jobTitle">{{#__}}Hotel Owner{{/__}}: </span>
         <span itemprop="name">{{#__}}kiriltrifonov{{/__}}</span>
     </div>
