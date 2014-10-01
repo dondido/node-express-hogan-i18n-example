@@ -107,8 +107,8 @@ exports.connect = function(req, res) {
     if (!language) {
       langCookie = headers.cookie || "";
       langCookieIndex = langCookie.indexOf(langStr);
-      language = langCookieIndex ==-1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1,2);  
-    } else if (headers.referer && headers.referer.indexOf(headers.host) != -1 && page == "refresh"){
+      language = langCookieIndex === -1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1, 2);  
+    } else if (headers.referer && headers.referer.indexOf(headers.host) > -1 && page === "refresh"){
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       urlList[1] = language;
       pageIndex = getPageIndex(urlList[2]);
