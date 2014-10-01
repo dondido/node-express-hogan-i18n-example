@@ -44,7 +44,7 @@ exports.connect = function(req, res) {
   more = req.params.more;
 
   pageIndex = getPageIndex(page) || page;
-  console.log('page', page, pageIndex, req.url)
+  
   if (pageIndex in cssrouter) {
 
     cssrouterpage = cssrouter[pageIndex];
@@ -123,7 +123,7 @@ exports.connect = function(req, res) {
 
     langList[localeIndex].link = false;
 
-    if (language != "en"){
+    if (language !== "en"){
       for (i in langList){
         langList[i].langstr = i18n.__(langList[i].langstr);
       }
