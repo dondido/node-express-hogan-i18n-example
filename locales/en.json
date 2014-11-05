@@ -103,5 +103,7 @@
 	"Albena": "Albena",
 	"Dobrich": "Dobrich",
 	"Bulgaria": "Bulgaria",
-	"email": "email"
+	"email": "email",
+	"titlerefresh": "titlerefresh",
+	"openinghours": "openinghours"
 }
