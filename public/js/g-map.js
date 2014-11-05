@@ -1,10 +1,10 @@
 
 (function($, document) {
     var $document = $(document),
-    $mapCanvas,
-    map,
-    mapOptions,
-    $mapDirections;
+        $mapCanvas,
+        map,
+        mapOptions,
+        $mapDirections;
 
     var init = function () {
         var script;

@@ -3,14 +3,6 @@ var localeList = ["en", "bg"],
   urlrouter = require(__dirname +"/../urlrouter/index.js"),
   cssrouter = require(__dirname +"/../cssrouter/index.js");
 
-var getPageIndex = function(page){
-  var pageIndex;
-  if (page in urlrouter) {
-    pageIndex = urlrouter[page];
-  }
-  return pageIndex;
-}
-
 // setup some locales - other locales will default to en silently
 i18n.configure({
     locales: localeList,
@@ -18,6 +10,7 @@ i18n.configure({
 });
 
 exports.i18n = i18n;
+var aaa = 0;
 
 /*
  * GET any page.
@@ -34,17 +27,32 @@ exports.connect = function(req, res) {
   headers,
   cssrouterpagemorefiles,
   language = req.params.language,
+  i,
+  l,
   langList = [
     { "prefix": "en", "langstr": "English", "link": true },
     { "prefix": "bg", "langstr": "Bulgarian", "link": true }, 
   ],
   i,
   pageIndex,
+  moreIndex,
   page = req.params.page || "home",
   more = req.params.more;
 
-  pageIndex = getPageIndex(page) || page;
+  localeIndex = localeList.indexOf(language);
+  if (localeIndex === -1) {
+    localeIndex = 0;
+    language = "en";
+  }
+  aaa++;
+  console.log(aaa, req.xhr);
   
+  pageIndex = urlrouter.getPageIndex(page) || page;
+  if (more){
+    moreIndex = urlrouter.getPageIndex(more) || more;
+  }
+  
+  /*handles css files*/
   if (pageIndex in cssrouter) {
 
     cssrouterpage = cssrouter[pageIndex];
@@ -53,8 +61,8 @@ exports.connect = function(req, res) {
       cssList = cssList.concat(cssrouterpage.files);
     }
   
-    if (more && more in cssrouterpage) {
-      cssrouterpagemorefiles = cssrouterpage[more].files;
+    if (moreIndex && moreIndex in cssrouterpage) {
+      cssrouterpagemorefiles = cssrouterpage[moreIndex].files;
       if (cssrouterpagemorefiles && cssrouterpagemorefiles.length) {
         cssList.concat(cssrouterpagemorefiles);
       }
@@ -82,8 +90,9 @@ exports.connect = function(req, res) {
     on the server and assigned to a property. This HTML is only a fragment
     of the full page and using Javascript on the client this fragment
     is substituted in for the last page"s content. */
-    
-    res.render(more || pageIndex, {
+    req.setLocale(language);
+    console.log("req.xhr", pageIndex, moreIndex)
+    res.render(moreIndex || pageIndex, {
       layout: false
     }, function(err, html) {
       if (err) {
@@ -104,23 +113,25 @@ exports.connect = function(req, res) {
     });
   } else {
     headers = req.headers;
+
     if (!language) {
       langCookie = headers.cookie || "";
       langCookieIndex = langCookie.indexOf(langStr);
-      language = langCookieIndex === -1 ? i18n.getLocale() : langCookie.substr(langCookieIndex + langStr.length + 1, 2);  
+      language = langCookieIndex === -1 ? 
+        i18n.getLocale() : 
+        langCookie.substr(langCookieIndex + langStr.length + 1, 2);  
     } else if (headers.referer && headers.referer.indexOf(headers.host) > -1 && page === "refresh"){
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
+      l = urlList.length;
+      for (i = 2; i < l; i ++) {
+        urlList[i] = urlrouter.translateUrl(decodeURI(urlList[i]), urlList[1], language);
+      }
       urlList[1] = language;
-      pageIndex = getPageIndex(urlList[2]);
+      console.log('refresh', urlList)
     }
-    
-    localeIndex = localeList.indexOf(language);
-    res.locals.lang = language;
-    if (localeIndex === -1) {
-      language = "en";
-    }
-    req.setLocale(language);
 
+    res.locals.lang = language;
+    req.setLocale(language);
     langList[localeIndex].link = false;
 
     if (language !== "en"){
@@ -132,6 +143,6 @@ exports.connect = function(req, res) {
     res.locals.langList = langList;
 
     res.cookie("language",  language, { maxAge: 900000 });
-    urlList ? res.redirect(urlList.join("/")) : res.render(more || pageIndex);
+    urlList ? res.redirect(urlList.join("/")) : res.render(moreIndex || pageIndex);
   }
 };

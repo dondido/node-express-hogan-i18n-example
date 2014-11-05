@@ -1,16 +1,34 @@
-module.exports = {
-	"hotel-in-albena-home": "home",
-	"hotel-in-albena-booking": "booking",
-	"hotel-in-albena-gallery": "gallery",
-	"hotel-in-albena-services": "services",
-	"hotel-in-albena-rates": "rates",
-	"hotel-in-albena-location": "location",
-	"hotel-in-albena-contact": "contact",
-	"вила-в-албена-начало": "home",
-	"вила-в-албена-резервация": "booking",
-	"вила-в-албена-галерия": "gallery",
-	"вила-в-албена-услуги": "services",
-	"вила-в-албена-цени": "rates",
-	"вила-в-албена-място": "location",
-	"вила-в-албена-контакти": "contact"
+var urlmap = require(__dirname +"/../urlrouter/map.js");
+
+exports.getPageIndex = function(page){
+  var pageIndex,
+    i,
+    urllangmap;
+
+  for (i in urlmap) {
+    urllangmap = urlmap[i];
+    if (page in urllangmap) {
+      pageIndex = urllangmap[page];
+      break;
+    }
+  }
+  return pageIndex;
+}
+
+exports.translateUrl = function(url, oldLang, newLang){
+  var pageIndex,
+    i,
+    urllangmap = urlmap[oldLang];
+  // maps url in one language to another using value as a key
+  if (url in urllangmap) {
+    pageIndex = urllangmap[url];
+    urllangmap = urlmap[newLang];
+    for (i in urllangmap) {
+      if (urllangmap[i] === pageIndex) {
+        url = i;
+        break;
+      }
+    }
+  }
+  return url;
 }

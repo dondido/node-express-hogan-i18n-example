@@ -1,7 +1,7 @@
 var app,
-merge = require('merge'), // npm install -g merge
-exist = require('module-exist'),
-mailer = require('express-mailer');
+  merge = require('merge'), // npm install -g merge
+  exist = require('module-exist'),
+  mailer = require('express-mailer');
 
 var emailCfg = exist(__dirname + "/../private/emailcfg.js") || {
   to: 'gmail.user@gmail.com',

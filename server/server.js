@@ -71,7 +71,7 @@ app.use(express.static(path.join(__dirname, '/../views'), {
 app.enable('view cache');
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
 	app.use(errorHandler());
 }
 

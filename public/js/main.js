@@ -11,13 +11,17 @@
 			$head = $("head");
 			$yield = $("#yield");
 			$mainNav = $("#main-nav");
+			$("html").removeClass("no-js");
 			$document.on({
 				"dataPageRefresh": updatePage,
 				"uiNavigate": navigateUsingPushState,
 				"uiPageChanged": setTitle
 			}).on("click", ".js-nav", navigate);
+			$(window).on({
+				"popstate": onPopState,
+				"beforeunload": destroyState
+			});
 		};
-		$("html").removeClass("no-js");
 	};
 	/* This HTML is only a fragment of the full page and
 	substituted with the requested page's content.*/
@@ -83,11 +87,12 @@
 	the only the changed content as a proprty and returns it in the response.
 	*/
 	var navigate = function(e) {
-		var $this = $(this),
-		href;
+		var $this,
+			href;
 		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which !== undefined && e.which > 1)) {
 			return;
 		}
+		$this = $(this);
 		href = $this.attr('href');
 		if (href !== location.pathname || defaultPath !== href) {
 			e.preventDefault();
@@ -104,14 +109,12 @@
 	};
 
 	var onPopState = function(e) {
+		var state = e.originalEvent.state;
+		console.log("state", state);
 		/* Replaces the old content with the new content from browser's cache. */
-		if (e.state) {
+		if (state && state.url) {
 			// Update state
-			if (e.state.url) {
-				requestJSON({pushState: 0, url: e.state.url});
-			} else {
-				updatePage(e, e.state);
-			}
+			requestJSON({pushState: 0, url: state.url});
 		}
 	};
 
@@ -122,15 +125,12 @@
 	“popstate” event listener will just ignore it.
 	*/
 	var destroyState = function () {
- 		history.replaceState(null, document.title, window.location.href);
+		console.log(history.state, decodeURI(window.location.href));
+ 		history.replaceState(null, document.title, decodeURI(window.location.href));
+ 		console.log(history);
+ 		console.log("");
 	};
 
 	$document.one("ready", init);
-
-	$(window).on({
-		"beforeunload": destroyState,
-		"popstate": onPopState
-	});
-
 
 })(jQuery);
