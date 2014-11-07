@@ -1,4 +1,5 @@
 var localeList = ["en", "bg"],
+  // https://github.com/mashpie/i18n-node
   i18n = require("i18n"),
   urlrouter = require(__dirname +"/../urlrouter/index.js"),
   cssrouter = require(__dirname +"/../cssrouter/index.js");
@@ -45,10 +46,16 @@ exports.connect = function(req, res) {
     language = "en";
   }
   aaa++;
-  console.log(aaa, req.xhr);
+  console.log(aaa, page, more);
+  
+  page = page.replace("-ajax", "");
+  if (page === ""){
+    page = "home";
+  }
   
   pageIndex = urlrouter.getPageIndex(page) || page;
   if (more){
+    more = more.replace("-ajax", "");
     moreIndex = urlrouter.getPageIndex(more) || more;
   }
   
@@ -71,7 +78,7 @@ exports.connect = function(req, res) {
  
   res.locals.cssList = cssList;
   res.locals.currentpage = pageIndex; 
-  res.locals.title = i18n.__("title" + pageIndex);
+  res.locals.title = i18n.__("title" + (moreIndex || pageIndex));
   // mustache helper
   res.locals.__ = function () {
     return function () {
@@ -91,7 +98,7 @@ exports.connect = function(req, res) {
     of the full page and using Javascript on the client this fragment
     is substituted in for the last page"s content. */
     req.setLocale(language);
-    console.log("req.xhr", pageIndex, moreIndex)
+    console.log("req.xhr", req.url)
     res.render(moreIndex || pageIndex, {
       layout: false
     }, function(err, html) {
@@ -120,14 +127,24 @@ exports.connect = function(req, res) {
       language = langCookieIndex === -1 ? 
         i18n.getLocale() : 
         langCookie.substr(langCookieIndex + langStr.length + 1, 2);  
-    } else if (headers.referer && headers.referer.indexOf(headers.host) > -1 && page === "refresh"){
+    } else if (headers.referer &&  page === "refresh"){
+      /* This HTTP request is usually triggered when users change the site language.
+      It can also be done on the client side. However, since we want to support
+      no javascript version of the site, the logic is moved to the server side. */
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       l = urlList.length;
       for (i = 2; i < l; i ++) {
-        urlList[i] = urlrouter.translateUrl(decodeURI(urlList[i]), urlList[1], language);
+        console.log("urlList[i]", urlList[i])
+        
+        // maps url in one language to another using value as a key
+        urlList[i] = i18n.__(
+          {
+            phrase: "page" + urlrouter.getPageIndex(decodeURI(urlList[i])), 
+            locale: language
+          }
+        );
       }
       urlList[1] = language;
-      console.log('refresh', urlList)
     }
 
     res.locals.lang = language;

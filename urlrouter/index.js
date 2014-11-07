@@ -14,21 +14,3 @@ exports.getPageIndex = function(page){
   }
   return pageIndex;
 }
-
-exports.translateUrl = function(url, oldLang, newLang){
-  var pageIndex,
-    i,
-    urllangmap = urlmap[oldLang];
-  // maps url in one language to another using value as a key
-  if (url in urllangmap) {
-    pageIndex = urllangmap[url];
-    urllangmap = urlmap[newLang];
-    for (i in urllangmap) {
-      if (urllangmap[i] === pageIndex) {
-        url = i;
-        break;
-      }
-    }
-  }
-  return url;
-}

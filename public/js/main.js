@@ -1,26 +1,30 @@
-(function($) {
+(function($, document) {
 	var $document = $(document),
 	initialNavigation = true,
+	$html,
 	$head,
 	$yield,
 	$mainNav,
-	defaultPath = location.pathname;
+	defaultLanguage,
+	defaultState,
+	defaultTitle,
+	defaultPath;
 
 	var init = function(){
 		if (history.pushState){
 			$head = $("head");
 			$yield = $("#yield");
 			$mainNav = $("#main-nav");
-			$("html").removeClass("no-js");
-			$document.on({
-				"dataPageRefresh": updatePage,
-				"uiNavigate": navigateUsingPushState,
-				"uiPageChanged": setTitle
-			}).on("click", ".js-nav", navigate);
-			$(window).on({
-				"popstate": onPopState,
-				"beforeunload": destroyState
-			});
+			$html = $("html");
+			$html.removeClass("no-js");
+
+			$document.on(
+				{
+					"dataPageRefresh": updatePage,
+					"uiNavigate": navigateUsingPushState
+				}
+			).on("click", ".js-nav", navigate);
+			$(window).on("popstate", onPopState);
 		};
 	};
 	/* This HTML is only a fragment of the full page and
@@ -32,6 +36,7 @@
 				$head.append('<link href="/css/' + data.cssList[cl] + '.css" rel="stylesheet" />');
 			}
 		}
+		document.title = data.title || document.title;
 		$yield.html(data.html);
 		$mainNav.removeClass().addClass(data.navSelector);
 	};
@@ -43,21 +48,28 @@
 	response with a property that holds the html fragment that applies to this
 	specific content or to return the entire HTML document. */
 	var requestJSON = function(data) {
-		$.ajax({
-			url: data.url,
-			//dataType: 'json',
-			success: function(resp) {
-				/* History API will only get populated if the request is not made
-				using onPopState event listener(forward or backward browser navigation). */
-				if (data.pushState) {
-					history.pushState({url: resp.url}, resp.title, resp.url);
+		$.ajax(
+			{
+				/* Preventing browsers from displaying ajax response when 
+				normal HTTP request is made and the back button pressed:
+				AJAX requests use a different URL from the full HTML documents. 
+				Most browsers cache the most recent request even if it is just a partial. */
+				url: data.url + "-ajax",
+				//dataType: 'json',
+				success: function(resp) {
+					var url = resp.url.replace("-ajax", "")
+					/* History API will only get populated if the request is not made
+					using onPopState event listener(forward or backward browser navigation). */
+					if (data.pushState) {
+						history.pushState({url: url}, resp.title, url);
+					}
+					$document.trigger('dataPageRefresh', resp);
+				},
+				error: function(req, status, err) {
+					console.log('Something went wrong', status, err);
 				}
-				$document.trigger('dataPageRefresh', resp);
-			},
-			error: function(req, status, err) {
-				console.log('something went wrong', status, err);
 			}
-		});
+		);
 	};
 
 	/* The beauty of this method is that it requires very little change to our application
@@ -67,14 +79,20 @@
 	will just default to normal HTTP requests. This basically means that support for browsers
 	which have javascript disabled is fully provided. */
 	var navigateUsingPushState = function(e, href) {
-		var currentState = {
-			navSelector: $mainNav[0].className,
-			html: $yield.html()
-		};
+		
 		if (initialNavigation) {
-			history.replaceState(currentState, "pagehome", defaultPath);
+			defaultLanguage = $html.attr("lang");
+			defaultTitle = document.title;
+			defaultPath = location.pathname + (
+				location.pathname.indexOf(defaultLanguage) === -1 ? defaultLanguage: "" );
+			defaultState = {
+				navSelector: $mainNav[0].className,
+				title: document.title,
+				html: $yield.html()
+			}
+			history.replaceState(defaultState, defaultTitle, defaultPath);
 			initialNavigation = false;
-		}
+		} 
 		requestJSON({pushState: 1, url: href});
 	};
 
@@ -87,50 +105,35 @@
 	the only the changed content as a proprty and returns it in the response.
 	*/
 	var navigate = function(e) {
-		var $this,
-			href;
+		var href;
 		if (e.shiftKey || e.ctrlKey || e.metaKey || (e.which !== undefined && e.which > 1)) {
 			return;
 		}
-		$this = $(this);
-		href = $this.attr('href');
-		if (href !== location.pathname || defaultPath !== href) {
+		href = $(this).attr('href');
+		if (href !== location.pathname) {
 			e.preventDefault();
-			$this.trigger('uiNavigate', href);
-		}
-
-	};
-
-	var setTitle = function(e, data) {
-		var state = data || e.originalEvent.state;
-		if (state) {
-			document.title = state.title;
+			if (defaultPath === href){
+				history.pushState(defaultState, defaultTitle, defaultPath);
+				updatePage(e, defaultState);
+			} else {
+				navigateUsingPushState(e, href);
+			} 
 		}
 	};
 
 	var onPopState = function(e) {
-		var state = e.originalEvent.state;
-		console.log("state", state);
 		/* Replaces the old content with the new content from browser's cache. */
-		if (state && state.url) {
+		var state = e.originalEvent.state;
+		if (state) {
 			// Update state
-			requestJSON({pushState: 0, url: state.url});
+			if (state.url) {
+				requestJSON({pushState: 0, url: state.url});
+			} else {
+				updatePage(e, state);
+			}
 		}
-	};
-
-	/*
-	adds a listener for the “beforeunload” event that uses replaceState to remove the state 
-	associated with the current URL. This way when the user hits the back button, the 
-	“popstate” event will ﬁre with a “state” property of null, and the aforementioned 
-	“popstate” event listener will just ignore it.
-	*/
-	var destroyState = function () {
-		console.log(history.state, decodeURI(window.location.href));
- 		history.replaceState(null, document.title, decodeURI(window.location.href));
- 		console.log(history);
- 		console.log("");
 	};
 
 	$document.one("ready", init);
 
-})(jQuery);
+})(jQuery, document);
