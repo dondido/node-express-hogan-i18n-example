@@ -73,6 +73,12 @@
 	"pagerates": "hotel-in-albena-rates",
 	"pagelocation": "hotel-in-albena-location",
 	"pagecontact": "hotel-in-albena-contact",
+	"pagehotelphotos": "hotel-area-photos",
+	"pageflat1photos": "first-flat-photos",
+	"pageflat2photos": "second-flat-photos",
+	"pageflat2photos": "third-flat-photos",
+	"pageflat2photos": "forth-flat-photos",
+	"pagediningphotos": "dining-area-photos",
 	"titlehome": "Seasons Villa Guest House in Albena",
 	"titlebooking": "Villa Guest House in Albena - holiday on the beach",
 	"titlegallery": "Family run hotel - gallery of the premises",
@@ -107,5 +113,6 @@
 	"flat2photosurl": "second-flat-photos",
 	"flat3photosurl": "third-flat-photos",
 	"flat4photosurl": "forth-flat-photos",
-	"diningphotosurl": "dining-area-photos"
+	"diningphotosurl": "dining-area-photos",
+	"pagenotfound": "Sorry, we couldn't find the page you were looking for. You may want to double check the url in your address bar or you can head home."
 }

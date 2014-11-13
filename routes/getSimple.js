@@ -11,42 +11,32 @@ i18n.configure({
 });
 
 exports.i18n = i18n;
-var aaa = 0;
 
 /*
  * GET any page.
  */
-exports.connect = function(req, res) {
+exports.connect = function(req, res, next) {
 
   var urlList,
-  langStr = "language",
   langCookie,
   langCookieIndex,
   localeIndex,
-  cssList = [],
   cssrouterpage,
   headers,
   cssrouterpagemorefiles,
-  language = req.params.language,
+  pageIndex,
+  moreIndex,
   i,
   l,
+  cssList = [],
   langList = [
     { "prefix": "en", "langstr": "English", "link": true },
     { "prefix": "bg", "langstr": "Bulgarian", "link": true }, 
   ],
-  i,
-  pageIndex,
-  moreIndex,
+  langStr = "language",
+  language = req.params.language,
   page = req.params.page || "home",
   more = req.params.more;
-
-  localeIndex = localeList.indexOf(language);
-  if (localeIndex === -1) {
-    localeIndex = 0;
-    language = "en";
-  }
-  aaa++;
-  console.log(aaa, page, more);
   
   page = page.replace("-ajax", "");
   if (page === ""){
@@ -54,6 +44,7 @@ exports.connect = function(req, res) {
   }
   
   pageIndex = urlrouter.getPageIndex(page) || page;
+
   if (more){
     more = more.replace("-ajax", "");
     moreIndex = urlrouter.getPageIndex(more) || more;
@@ -98,11 +89,25 @@ exports.connect = function(req, res) {
     of the full page and using Javascript on the client this fragment
     is substituted in for the last page"s content. */
     req.setLocale(language);
-    console.log("req.xhr", req.url)
     res.render(moreIndex || pageIndex, {
       layout: false
     }, function(err, html) {
       if (err) {
+        res.render(
+          '404', 
+          {
+            layout: false
+          },
+          function(err, html) {
+            res.json(
+              {
+                title: "page404",
+                url: req.url,
+                html: html
+              }
+            )
+          }
+        )
         // handle error, keep in mind the response may be partially-sent
         // so check res.headersSent
       } else {
@@ -119,6 +124,7 @@ exports.connect = function(req, res) {
       }
     });
   } else {
+
     headers = req.headers;
 
     if (!language) {
@@ -134,8 +140,6 @@ exports.connect = function(req, res) {
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       l = urlList.length;
       for (i = 2; i < l; i ++) {
-        console.log("urlList[i]", urlList[i])
-        
         // maps url in one language to another using value as a key
         urlList[i] = i18n.__(
           {
@@ -145,6 +149,12 @@ exports.connect = function(req, res) {
         );
       }
       urlList[1] = language;
+    }
+
+    localeIndex = localeList.indexOf(language);
+    if (localeIndex === -1) {
+      res.status(404).render('404');
+      return;
     }
 
     res.locals.lang = language;
@@ -158,8 +168,19 @@ exports.connect = function(req, res) {
     }
     
     res.locals.langList = langList;
-
     res.cookie("language",  language, { maxAge: 900000 });
-    urlList ? res.redirect(urlList.join("/")) : res.render(moreIndex || pageIndex);
+    if (urlList) {
+      res.redirect(urlList.join("/"))
+    } else {
+      res.render(moreIndex || pageIndex, 
+        function(err, html){
+          if (err) {
+            res.status(404).render('404');
+          } else {
+            res.end(html)
+          }
+        } 
+      );
+    }
   }
 };
