@@ -29,10 +29,13 @@
             script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=loadMap';
             document.body.appendChild(script);
         }
+
+        $document.on("click", "#route-btn", suggestRoute)
+                .one("dataPageRefresh", removePage);
     };
 
     var removePage = function () {
-        toggleListeners("off");
+        $document.off("click", "#route-btn", suggestRoute)
     };
 
     var createMap = function (start) {
@@ -89,18 +92,11 @@
             loadMap();
         }
     };
-    
-    var toggleListeners = function (binder){
-        if (document.readyState === "complete"){
-            init();
-        } else {
-            $document[binder]("click", "#route-btn", suggestRoute)
-                [binder]("dataPageRefresh", removePage);
-        }
-       
-    };
 
     window.loadMap = function (){
+        var marker,
+            infowindow;
+
         mapOptions = {
             zoom: 14,
             /*
@@ -109,23 +105,28 @@
                 This object is used in the rest of the function. 
                 In fact, it’ll be used in the getMapOptions to set the center of the Map we’re building. 
             */
-            center: new google.maps.LatLng(43.382995,28.098228),
+            center: new google.maps.LatLng(43.382995, 28.098228),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         //  As a container for the map,  a <div> element is used, with an id of "#map-canvas".
         map = new google.maps.Map($mapCanvas[0], mapOptions);
         // marker is added to the map to show the user’s position. Google Maps default icon is used
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             map: map,
             position: map.getCenter()
         });
-        var infowindow = new google.maps.InfoWindow({
-            content: "<b>Seasons</b><br/>Hotel Guest House<br/> Albena"
+
+        infowindow = new google.maps.InfoWindow({
+            content: $mapCanvas.data("pin-label")
         });
         
         infowindow.open(map, marker);
     };
-    
-    toggleListeners("on");
+
+    if (document.readyState === "complete"){
+        init();
+    } else { 
+        $document.one("ready", init);
+    }
     
 })(jQuery, document);

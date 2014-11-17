@@ -24,8 +24,10 @@ exports.connect = function(req, res, next) {
   cssrouterpage,
   headers,
   cssrouterpagemorefiles,
+  pageTitle,
   pageIndex,
   moreIndex,
+  decodedUrl,
   i,
   l,
   cssList = [],
@@ -69,14 +71,14 @@ exports.connect = function(req, res, next) {
  
   res.locals.cssList = cssList;
   res.locals.currentpage = pageIndex; 
-  res.locals.title = i18n.__("title" + (moreIndex || pageIndex));
+  
   // mustache helper
   res.locals.__ = function () {
     return function () {
       return i18n.__.apply(req, arguments);
     };
   };
-  
+
   /* Looks for the header and if the header is present it sets
   the request options to not use a layout page. */
   if (req.xhr) {
@@ -115,7 +117,7 @@ exports.connect = function(req, res, next) {
         to be rendered and returned. If the request header is not requested with 
         XMLHttpRequest then the page is rendered like normal with the full view. */
         res.json({
-          title: "page" + page,
+          title: req.__("title" + (moreIndex || pageIndex)),
           url: req.url,
           navSelector: pageIndex,
           cssList: cssList,
@@ -140,13 +142,11 @@ exports.connect = function(req, res, next) {
       urlList = headers.referer.replace("http://" + headers.host, "").split("/");
       l = urlList.length;
       for (i = 2; i < l; i ++) {
+        decodedUrl = urlrouter.getPageIndex(decodeURI(urlList[i]));
         // maps url in one language to another using value as a key
-        urlList[i] = i18n.__(
-          {
-            phrase: "page" + urlrouter.getPageIndex(decodeURI(urlList[i])), 
-            locale: language
-          }
-        );
+        if (decodedUrl){
+          urlList[i] = req.__({phrase: "page" + decodedUrl, locale: language});
+        }
       }
       urlList[1] = language;
     }
@@ -163,9 +163,11 @@ exports.connect = function(req, res, next) {
 
     if (language !== "en"){
       for (i in langList){
-        langList[i].langstr = i18n.__(langList[i].langstr);
+        langList[i].langstr = req.__(langList[i].langstr);
       }
     }
+
+    res.locals.title = req.__("title" + (moreIndex || pageIndex));
     
     res.locals.langList = langList;
     res.cookie("language",  language, { maxAge: 900000 });

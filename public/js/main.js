@@ -4,6 +4,7 @@
 	$html,
 	$head,
 	$yield,
+	$navBtn,
 	$mainNav,
 	defaultLanguage,
 	defaultState,
@@ -15,6 +16,7 @@
 			$head = $("head");
 			$yield = $("#yield");
 			$mainNav = $("#main-nav");
+			$navBtn = $("#navbar-checkbox");
 			$html = $("html");
 			$html.removeClass("no-js");
 
@@ -117,6 +119,8 @@
 				updatePage(e, defaultState);
 			} else {
 				navigateUsingPushState(e, href);
+				// contracts expanded vertical menu 
+				$navBtn[0].checked = false;
 			} 
 		}
 	};
