@@ -1,4 +1,7 @@
 var localeList = ["en", "bg"],
+  env = process.env.NODE_ENV,
+  pathmin = "",
+  filemin = "",
   // https://github.com/mashpie/i18n-node
   i18n = require("i18n"),
   urlrouter = require(__dirname +"/../urlrouter/index.js"),
@@ -11,6 +14,13 @@ i18n.configure({
 });
 
 exports.i18n = i18n;
+
+if (env) {
+  pathmin = "min/"
+  filemin = ".min"
+}
+
+cssrouter.init(env, pathmin, filemin);
 
 /*
  * GET any page.
@@ -30,7 +40,7 @@ exports.connect = function(req, res, next) {
   decodedUrl,
   i,
   l,
-  cssList = [],
+  cssList,
   langList = [
     { "prefix": "en", "langstr": "English", "link": true },
     { "prefix": "bg", "langstr": "Bulgarian", "link": true }, 
@@ -53,24 +63,11 @@ exports.connect = function(req, res, next) {
   }
   
   /*handles css files*/
-  if (pageIndex in cssrouter) {
-
-    cssrouterpage = cssrouter[pageIndex];
-
-    if (cssrouterpage.files && cssrouterpage.files.length) {
-      cssList = cssList.concat(cssrouterpage.files);
-    }
-  
-    if (moreIndex && moreIndex in cssrouterpage) {
-      cssrouterpagemorefiles = cssrouterpage[moreIndex].files;
-      if (cssrouterpagemorefiles && cssrouterpagemorefiles.length) {
-        cssList.concat(cssrouterpagemorefiles);
-      }
-    }
-  }
+  cssList = cssrouter.map[pageIndex] || [];
  
-  res.locals.cssList = cssList;
-  res.locals.currentpage = pageIndex; 
+  res.locals.currentpage = pageIndex;
+  res.locals.pathmin = pathmin; 
+  res.locals.filemin = filemin; 
   
   // mustache helper
   res.locals.__ = function () {
@@ -82,6 +79,7 @@ exports.connect = function(req, res, next) {
   /* Looks for the header and if the header is present it sets
   the request options to not use a layout page. */
   if (req.xhr) {
+    res.locals.cssList = cssList;
     res.locals.lang = language;
     /* The basic idea of here is that we update the parts of the page
     that change when the user navigates through your app. However, unlike
@@ -150,6 +148,8 @@ exports.connect = function(req, res, next) {
       }
       urlList[1] = language;
     }
+    
+    res.locals.cssList = cssrouter.map["default"].concat(cssList);
 
     localeIndex = localeList.indexOf(language);
     if (localeIndex === -1) {

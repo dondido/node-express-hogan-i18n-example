@@ -1,0 +1,138 @@
+.input-prepend {
+	margin-bottom: 5px;
+	font-size: 0;
+	white-space: nowrap;
+}
+
+.input-append .add-on, .input-prepend .add-on {
+	display: inline-block;
+	width: auto;
+	height: 20px;
+	min-width: 16px;
+	padding: 4px 5px;
+	font-size: 14px;
+	text-align: center;
+	background-color: #eeeeee;
+	border: 1px solid #ccc;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+	vertical-align: text-top;
+	background-image: url("../images/glyphicons.png");
+	background-position: 14px 14px;
+	background-repeat: no-repeat;
+	margin-top: 1px;
+}
+
+.input-append input, .input-prepend input, .input-append select, .input-prepend select, .input-append .uneditable-input, .input-prepend .uneditable-input {
+    position: relative;
+    margin-left: 0;
+    font-size: 14px;
+    line-height: 30px;
+    height: 30px;
+    vertical-align: top;
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+    border: 1px solid #cccccc;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    display: inline-block;
+    height: 20px;
+    padding: 4px 6px;
+    margin-bottom: 9px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #555555;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+label > div {
+	margin-bottom: 5px;
+}
+
+input, textarea, .uneditable-input {
+    margin-left: 0;
+}
+
+textarea {
+	height: auto;
+}
+
+.icon-user {
+	background-position: -168px 0;
+}
+
+.icon-envelope {
+	background-position: -72px 0;
+}
+
+.icon-phone {
+	background-position: 0 0;
+}
+
+.icon-home {
+	background-position: 0 -24px;
+}
+
+.icon-calendar {
+	background-position: -192px -120px;
+}
+
+.icon-resize-horizontal {
+	background-position: -456px -118px;
+}
+
+.submit-pending #submit-pending,
+.submit-fail #submit-fail,
+.submit-success #submit-success,
+#submit-success:target,
+#submit-fail:target {
+	display: block;
+}
+
+#submit-pending,
+#reset-form,
+#submit-success,
+#submit-fail {
+	display: none;
+}
+
+.input-prepend input {
+    	width: -moz-calc(100% - 28px);
+	width: -webkit-calc(100% - 28px);
+	width: calc(100% - 28px);
+}
+
+.add-on + select,
+.add-on + input {
+	border-left: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.add-on {
+	border-left: 3px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.get-value {
+	width: 100%;
+}
+

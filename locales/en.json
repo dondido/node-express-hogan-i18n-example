@@ -75,8 +75,6 @@
 	"pagecontact": "hotel-in-albena-contact",
 	"pagehotelphotos": "hotel-area-photos",
 	"pageflat1photos": "first-flat-photos",
-	"pageflat2photos": "second-flat-photos",
-	"pageflat2photos": "third-flat-photos",
 	"pageflat2photos": "forth-flat-photos",
 	"pagediningphotos": "dining-area-photos",
 	"titlehome": "Seasons Villa Guest House in Albena",
@@ -108,5 +106,8 @@
 	"openinghours": "Opening hours",
 	"monday-through-sunday": "Monday through Sunday, all day",
 	"whole-house": "Whole House",
-	"pagenotfound": "Sorry, we couldn't find the page you were looking for. You may want to double check the url in your address bar or you can head home."
+	"pagenotfound": "Sorry, we couldn't find the page you were looking for. You may want to double check the url in your address bar or you can head home.",
+	"sending__": "sending__",
+	"pageflat3photos": "pageflat3photos",
+	"pageflat4photos": "pageflat4photos"
 }

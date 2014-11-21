@@ -6,17 +6,25 @@ var express = require("express"),
 	errorHandler = require('errorhandler'),
 	hogan = require('hogan-express'),
 	bodyParser = require('body-parser'),
+	compression = require('compression'),
 	getSimple = require(__dirname +'/../routes/getSimple.js');
 	
 var postSimple = require(__dirname +'/../routes/postSimple.js').init(app);
-
-var router = express.Router();
 
 var path = require("path");
 var oneDay = 86400000;
 
 // Switch off the default 'X-Powered-By: Express' header
 app.disable('x-powered-by');
+
+/* When a gzip compatible browser requests to a web server, web server 
+can compress the response to the browser back and the browser can 
+decompress the response and finally the browser get the original response.
+
+If the server does not take care of gzip compression, the original size of
+data is passed which takes longer time than using gzip because it is 
+sending bigger data! */
+app.use(compression())
 
 // SERVER CONFIGURATION
 // ====================
@@ -69,7 +77,7 @@ app.use(express.static(path.join(__dirname, '/../views'), {
 	maxAge: oneDay
 }));
 app.enable('view cache');
-
+console.log('env', app.get('env'))
 // development only
 if ('development' === app.get('env')) {
 	app.use(errorHandler());
