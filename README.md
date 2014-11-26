@@ -13,7 +13,7 @@ In order to focus on delivering content in the most effective way, this example 
 
 ## Installation
 
-Once you have forked the project, you can run the app simple by simply typing the following line:
+Once you have forked the project, you can run the app by simply typing the following line in your terminal:
 
 ```js
 npm start
