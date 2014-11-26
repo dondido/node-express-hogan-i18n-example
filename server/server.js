@@ -8,11 +8,10 @@ var express = require("express"),
 	bodyParser = require('body-parser'),
 	compression = require('compression'),
 	getSimple = require(__dirname +'/../routes/getSimple.js');
-	
-var postSimple = require(__dirname +'/../routes/postSimple.js').init(app);
-
-var path = require("path");
-var oneDay = 86400000;
+	postSimple = require(__dirname +'/../routes/postSimple.js').init(app),
+	path = require("path"),
+	publicPath = "/../public/",
+	oneDay = 86400000;
 
 // Switch off the default 'X-Powered-By: Express' header
 app.disable('x-powered-by');
@@ -24,7 +23,7 @@ decompress the response and finally the browser get the original response.
 If the server does not take care of gzip compression, the original size of
 data is passed which takes longer time than using gzip because it is 
 sending bigger data! */
-app.use(compression())
+app.use(compression());
 
 // SERVER CONFIGURATION
 // ====================
@@ -47,6 +46,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+if ('production' === app.get('env')) {
+	publicPath += 'build';
+} else {
+	// development only
+	publicPath += 'dev';
+	app.use(errorHandler());
+}
+
 /* Setting the layout page. Layout page needs {{{ yield }}}
 where page content will be injected */
 app.set('layout', 'layout');
@@ -63,9 +70,9 @@ app.set('partials', {
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'html');
 
-app.use(favicon(__dirname + '/../public/images/icon/favicon.ico'));
+app.use(favicon(__dirname + publicPath + '/images/icon/favicon.ico'));
 
-app.use(express.static(path.join(__dirname, '/../public'), {
+app.use(express.static(path.join(__dirname, publicPath), {
 	maxAge: oneDay
 }));
 /* In order to further improve the performance of you AJAX page loads
@@ -77,11 +84,6 @@ app.use(express.static(path.join(__dirname, '/../views'), {
 	maxAge: oneDay
 }));
 app.enable('view cache');
-console.log('env', app.get('env'))
-// development only
-if ('development' === app.get('env')) {
-	app.use(errorHandler());
-}
 
 // prevent framing of everything.  content underneath that needs to be
 // framed must explicitly remove the x-frame-options

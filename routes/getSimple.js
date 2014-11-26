@@ -1,11 +1,8 @@
 var localeList = ["en", "bg"],
-  env = process.env.NODE_ENV,
-  pathmin = "",
-  filemin = "",
   // https://github.com/mashpie/i18n-node
   i18n = require("i18n"),
-  urlrouter = require(__dirname +"/../urlrouter/index.js"),
-  cssrouter = require(__dirname +"/../cssrouter/index.js");
+  cssMap = require(__dirname +"/../cssrouter/map.js")
+  urlrouter = require(__dirname +"/../urlrouter/index.js");
 
 // setup some locales - other locales will default to en silently
 i18n.configure({
@@ -14,13 +11,6 @@ i18n.configure({
 });
 
 exports.i18n = i18n;
-
-if (env) {
-  pathmin = "min/"
-  filemin = ".min"
-}
-
-cssrouter.init(env, pathmin, filemin);
 
 /*
  * GET any page.
@@ -31,9 +21,7 @@ exports.connect = function(req, res, next) {
   langCookie,
   langCookieIndex,
   localeIndex,
-  cssrouterpage,
   headers,
-  cssrouterpagemorefiles,
   pageTitle,
   pageIndex,
   moreIndex,
@@ -63,12 +51,9 @@ exports.connect = function(req, res, next) {
   }
   
   /*handles css files*/
-  cssList = cssrouter.map[pageIndex] || [];
+  cssList = cssMap[pageIndex] || [];
  
   res.locals.currentpage = pageIndex;
-  res.locals.pathmin = pathmin; 
-  res.locals.filemin = filemin; 
-  
   // mustache helper
   res.locals.__ = function () {
     return function () {
@@ -149,7 +134,7 @@ exports.connect = function(req, res, next) {
       urlList[1] = language;
     }
     
-    res.locals.cssList = cssrouter.map["default"].concat(cssList);
+    res.locals.cssList = cssMap["default"].concat(cssList);
 
     localeIndex = localeList.indexOf(language);
     if (localeIndex === -1) {

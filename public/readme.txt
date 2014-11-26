@@ -1,0 +1,1 @@
+Please add build directory to your gitingnore file in order to prevent it from commiting.
