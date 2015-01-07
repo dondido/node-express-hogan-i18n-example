@@ -1,7 +1,7 @@
 var localeList = ["en", "bg"],
   // https://github.com/mashpie/i18n-node
   i18n = require("i18n"),
-  cssMap = require(__dirname +"/../cssrouter/map.js")
+  cssMap = require(__dirname +"/../cssrouter/map.js"),
   urlrouter = require(__dirname +"/../urlrouter/index.js");
 
 // setup some locales - other locales will default to en silently
