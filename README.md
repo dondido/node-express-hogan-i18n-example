@@ -13,11 +13,21 @@ In order to focus on delivering content in the most effective way, this example 
 
 ## Installation
 
-Once you have forked the project, you can run the app by simply typing the following line in your terminal:
+Once you have forked this project, go ahead and install our dependencies by simply typing the following line in your terminal:
 
+```js
+npm install
+```
+Now let's start the app:
 ```js
 npm start
 ```
+In order to automate the workflow and build processes for deployment we use Grunt. The task runner help us minify and compress our assets to improve your site’s performance and prepare it for production:
+
+```js
+grunt
+```
+
 And here is how you run the app in production mode:
 
 ```js
